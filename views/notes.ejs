@@ -223,9 +223,9 @@
                     <input type="text" class=" note_title" placeholder="默认无标签">
                 </div>
             </div>
-        </div>
-        <div class="note_div">
-            <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">第一次的笔记内容</div>
+            <div class="note_div">
+                <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">第一次的笔记内容</div>
+            </div>
         </div>
     </div>
 
@@ -243,48 +243,11 @@
 
 
 <script src="/layui/layui.js"></script>
+<script src="/javascripts/note_interaction.js"></script>
 <script>
   layui.use('element', function () {
     var element = layui.element;
   });
-
-
-  $(".note_div").click(function (e) {
-    $('.mynote').summernote({
-        lang: 'zh-CN',
-        toolbar: [
-          ['style', ['fontname', 'style']],
-          ['font', ['bold', 'italic', 'underline', 'clear', 'strikethrough']],
-          ['fontsize', ['fontsize']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['insert', ['table', 'picture', 'fullscreen']]
-        ],
-        placeholder: 'write here...',
-        height: 570,
-        minHeight: null,
-        maxHeight: null,
-        focus: true
-      }
-    );
-    e.stopPropagation();
-  });
-
-  $("body").click(function (e) {
-    var markupStr = $('.mynote').summernote('code');
-    alert(markupStr);
-    $('.mynote').summernote('destroy');
-    if (e) e.stack;
-  });
-
-  $(".fill_space").click(function (e) {
-    var markupStr = $('.mynote').summernote('code');
-    alert(markupStr);
-    $('.mynote').summernote('destroy');
-    if (e) e.stack;
-  });
-
 
 </script>
 </body>
