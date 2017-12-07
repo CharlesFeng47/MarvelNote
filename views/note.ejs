@@ -3,17 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>layout 后台大布局 - Layui</title>
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
-
+    <title>Marvel Note</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/stylesheets/note.css">
     <style>
-        /*body {*/
-        /*margin: 10px;*/
-        /*}*/
-
-        footer {
-            height: 50px;
-            margin-top: -50px;
+        body {
+            margin: 7px;
         }
     </style>
 </head>
@@ -21,7 +16,6 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"><img src="/images/logo.png" class="layui-nav-img"></div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">新建笔记</a></li>
             <li class="layui-nav-item"><a href="">笔记</a></li>
@@ -38,70 +32,200 @@
                 </dl>
             </li>
         </ul>
-    </div>
-
-    <!-- 笔记正文部分 -->
-    <div style="padding: 15px">
-        <div class="layui-col-md3">
-            <ul class="flow-default" style="height: 20px;" id="note_list"></ul>
-
-
-        </div>
-        <div class="layui-col-md9">
-            <div class="layui-row grid-demo grid-demo-bg1">
-                <div class="layui-col-md12">第一个
-                </div>
-            </div>
-            <div class="layui-row grid-demo grid-demo-bg1">
-                <div class="layui-col-md12">第一个
-                </div>
-            </div>
-            <div class="layui-row grid-demo grid-demo-bg1">
-                <div class="layui-col-md12">第一个
-                </div>
-            </div>
-        </div>
 
     </div>
-</div>
+
+
+    <div class="layui-side layui-bg-black" style="margin-top: 15px; margin-bottom: 7px">
+        <div class="layui-side-scroll">
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 5px;"></div>
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 5px;"></div>
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 5px;"></div>
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 5px;"></div>
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 5px;"></div>
+            <div class="brief_note">
+                <div class="row" style="height: 25px">
+                    <div class="layui-col-xs8">
+                        <div class="brief_note_title">
+                            你的第一本笔记
+                        </div>
+                        <div class="row">
+                            <div class="brief_note_time">昨天</div>
+                        </div>
+                    </div>
+                    <!-- 分享、删除按钮 -->
+                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                            <i class="layui-icon">&#xe641;</i>
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <hr class="layui-bg-green" style="margin-top: 17px">
+                <div class="row">
+                    <div class="brief_note_content"><p>
+                            1234567891234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123491234567891234912345678912349123456789123456789123456789123456789</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="layui-body" style="margin: 15px 7px 7px 20px;">
+        <!-- 内容主体区域 -->
+        <div>内容主体区域</div>
+    </div>
 
 </div>
-
-<!--<footer style="height: 50px;margin-bottom: -50px;">-->
-<!--<hr class="layui-bg-green">-->
-<!--<div>-->
-<!--<p style="text-align: center;">copyright@ charles</p>-->
-<!--</div>-->
-<!--</footer>-->
-
-
 <script src="/layui/layui.js"></script>
 <script>
   //JavaScript代码区域
   layui.use('element', function () {
     var element = layui.element;
 
-  });
-
-  layui.use('flow', function () {
-    var flow = layui.flow;
-
-    flow.load({
-      elem: '#note_list' //流加载容器
-      // , scrollElem: '#note_list' //滚动条所在元素，一般不用填，此处只是演示需要。
-      , isAuto: false
-      // , isLazyimg: true
-      , done: function (page, next) { //加载下一页
-        //模拟插入
-        setTimeout(function () {
-          var lis = [];
-          for (var i = 0; i < 6; i++) {
-            lis.push('<li><img lay-src="/images/logo.png" style="width: 130px;height: 130px"></li>')
-          }
-          next(lis.join(''), page < 6); //假设总页数为 6
-        }, 500);
-      }
-    });
   });
 </script>
 </body>

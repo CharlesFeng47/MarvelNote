@@ -1,0 +1,34 @@
+.brief_note_item {
+    height: 50px;
+}
+
+.brief_note {
+    padding: 7px;
+    border:5px solid #159587;
+    height: 20%;
+}
+
+.brief_note_time {
+    font-size: 10px;
+    color: #BDC0BA;
+}
+
+.brief_note_content{
+    font-size: 13px;
+    color: #BDC0BA;
+    max-height:76px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    word-wrap:break-word
+}
+
+.brief_note_title{
+    font-size: 15px;
+    color: #BDC0BA;
+}
+
+.brief_share_delete_btn_group {
+    margin-top: 2px;
+    margin-right: -11px;
+    margin-left: 11px;
+}
