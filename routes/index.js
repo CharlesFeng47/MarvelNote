@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     else console.log(JSON.stringify(res));
   });
 
-  res.render('note', { title: 'Express', aa: '<h4>aa</h4>' });
+  res.render('notebook', { title: 'Express', aa: '<h4>aa</h4>' });
 });
 
 module.exports = router;
