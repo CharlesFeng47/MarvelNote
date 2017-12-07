@@ -4,7 +4,7 @@
 
 .brief_note {
     padding: 7px;
-    border:5px solid #159587;
+    border: 5px solid #159587;
     height: 20%;
 }
 
@@ -13,16 +13,16 @@
     color: #BDC0BA;
 }
 
-.brief_note_content{
+.brief_note_content {
     font-size: 13px;
     color: #BDC0BA;
-    max-height:76px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    word-wrap:break-word
+    max-height: 76px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word
 }
 
-.brief_note_title{
+.brief_note_title {
     font-size: 15px;
     color: #BDC0BA;
 }
@@ -31,4 +31,39 @@
     margin-top: 2px;
     margin-right: -11px;
     margin-left: 11px;
+}
+
+.note_title_icon {
+    font-size: 25px;
+    color: white;
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+.note_title_outer {
+    margin-left: 2px;
+}
+
+.note_title {
+    font-size: 17px;
+    color: #BDC0BA;
+    border-color: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    margin-top: 2px;
+
+}
+
+/*输入框的默认颜色*/
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #787b75;
+}
+
+.note_div {
+    opacity: 0.9;
+    height: 580px;
+
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+;
 }
