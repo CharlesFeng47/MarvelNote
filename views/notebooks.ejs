@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Marvel Note</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
-    <link rel="stylesheet" href="/stylesheets/note.css">
+    <link rel="stylesheet" href="/stylesheets/notebooks.css">
     <style>
         body {
             margin: 7px;
@@ -18,124 +18,212 @@
     <% include ./header.ejs %>
 
     <div class="layui-side layui-bg-black" style="width: 99%;margin: 15px 7px 7px;top: 53px;">
-        <div class="layui-side-scroll" style="width: 100%;">
-            <div style="padding: 15px;">
-                <!-- 笔记本 -->
+        <div class="layui-side-scroll" style="width: 100%;padding: 15px;padding-bottom: 25px">
+
+            <!-- 添加按钮 -->
+            <div class="layui-col-xs-offset10 layui-col-xs2">
+                <p class="layui-col-xs-offset2 layui-col-xs6"
+                   style="font-size:16px;text-align: right;margin-top: 6px;margin-right: 5px">添加笔记本</p>
+                <button class="layui-col-xs2 layui-btn layui-btn-radius layui-btn-sm layui-btn">
+                    <i class="layui-icon">&#xe61f;</i>
+                </button>
+            </div>
+
+            <!-- 笔记本 -->
+            <div class="layui-col-xs12">
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb1">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook0.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb1">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook1.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb1">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook2.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb1">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook3.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook4.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook5.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook6.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook7.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook8.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook9.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook10.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
                             <img alt="Background" src="/images/notebook11.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
                 <div class="layui-col-xs3">
-                    <div style="padding: 30px">
+                    <div class="nb2">
                         <label class="layui-col-xs12" style="text-align: center">
-                            <img alt="Background" src="/images/notebook2.png" style="max-width: 100% ">
+                            <img alt="Background" src="/images/notebook12.png" style="max-width: 100% ">
                         </label>
-                        <h4 style="text-align: center">笔记本1</h4>
-                        <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="nb2">
+                        <label class="layui-col-xs12" style="text-align: center">
+                            <img alt="Background" src="/images/notebook13.png" style="max-width: 100% ">
+                        </label>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="nb2">
+                        <label class="layui-col-xs12" style="text-align: center">
+                            <img alt="Background" src="/images/notebook14.png" style="max-width: 100% ">
+                        </label>
+                        <h4 class="layui-col-xs12" style="text-align: center">笔记本1</h4>
+                        <p class="layui-col-xs12" style="font-size: 12px">
+                            描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
+                        <button class="layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -154,6 +242,7 @@
   layui.use('element', function () {
     var element = layui.element;
   });
+
 
 
 </script>

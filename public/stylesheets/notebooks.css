@@ -1,0 +1,10 @@
+/* 第一行的元素之前太空空隙 */
+.nb1 {
+    padding: 45px;
+    margin-top: -20px;
+}
+
+/* 除了第一行的元素 */
+.nb2 {
+    padding: 45px;
+}
