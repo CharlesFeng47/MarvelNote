@@ -1,6 +1,6 @@
 <!-- 笔记 -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,27 +15,7 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo"><img src="/images/logo.png" class="layui-nav-img"></div>
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">新建笔记</a></li>
-            <li class="layui-nav-item"><a href="">笔记</a></li>
-            <li class="layui-nav-item"><a href="">笔记本</a></li>
-            <li class="layui-nav-item"><a href="">标签</a></li>
-            <li class="layui-nav-item"><a href="">朋友圈</a></li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">CharlesFeng</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">修改密码</a></dd>
-                    <dd><a href="javascript:;">退出登录</a></dd>
-                </dl>
-            </li>
-        </ul>
-
-    </div>
-
+    <% include ./header.ejs %>
 
     <!-- 笔记的左边导航部分 -->
     <div class="layui-side layui-bg-black" style="margin-left: 7px;margin-top: 15px; margin-bottom: 7px; top: 53px;">
@@ -252,5 +232,5 @@
 </script>
 </body>
 
-<div class="fill_space" style="height: 800px"></div>
+<% include ./footer.ejs %>
 </html>

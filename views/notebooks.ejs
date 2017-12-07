@@ -1,6 +1,6 @@
 <!-- 笔记本 -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,26 +15,7 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo"><img src="/images/logo.png" class="layui-nav-img"></div>
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">新建笔记</a></li>
-            <li class="layui-nav-item"><a href="">笔记</a></li>
-            <li class="layui-nav-item"><a href="">笔记本</a></li>
-            <li class="layui-nav-item"><a href="">标签</a></li>
-            <li class="layui-nav-item"><a href="">朋友圈</a></li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">CharlesFeng</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">修改密码</a></dd>
-                    <dd><a href="javascript:;">退出登录</a></dd>
-                </dl>
-            </li>
-        </ul>
-    </div>
-
+    <% include ./header.ejs %>
 
     <div class="layui-side layui-bg-black" style="width: 99%;margin: 15px 7px 7px;top: 53px;">
         <div class="layui-side-scroll" style="width: 100%;">
@@ -79,7 +60,7 @@
                 <div class="layui-col-xs3">
                     <div style="padding: 30px">
                         <label class="layui-col-xs12" style="text-align: center">
-                            <img alt="Background" src="/images/notebook5.png"style="max-width: 100% ">
+                            <img alt="Background" src="/images/notebook5.png" style="max-width: 100% ">
                         </label>
                         <h4 style="text-align: center">笔记本1</h4>
                         <p style="font-size: 12px">描述：这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本这个笔记本是宝宝的第一个笔记本</p>
