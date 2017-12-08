@@ -197,6 +197,8 @@
       nb_id: $(this).parent().find(".nb_id").html()
     };
 
+    var this_note = $(this).parent().parent();
+
     $.ajax({
       type: "post",
       async: true,
@@ -205,6 +207,9 @@
 
       success: function (result) {
         alert(result);
+
+        // 动态修改当前样式 TODO 第一行元素删了，之后的元素css需要修改
+        this_note.empty();
       },
       error: function (result) {
         alert("错误" + result);
