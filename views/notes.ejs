@@ -22,6 +22,7 @@
         <div class="layui-side-scroll">
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">0</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -47,6 +48,7 @@
             <div style="height: 5px;"></div>
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">1</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -72,6 +74,7 @@
             <div style="height: 5px;"></div>
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">2</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -97,6 +100,7 @@
             <div style="height: 5px;"></div>
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">3</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -122,6 +126,7 @@
             <div style="height: 5px;"></div>
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">4</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -147,6 +152,7 @@
             <div style="height: 5px;"></div>
             <div class="brief_note">
                 <div style="height: 25px">
+                    <p class="note_id" style="display: none">5</p>
                     <div class="layui-col-xs8">
                         <div class="brief_note_title">
                             你的第一本笔记
@@ -230,17 +236,15 @@
   });
 
   $('.share_note').click(function (e) {
-
-    // TODO 获取到具体是哪一条笔记？
-    var fakeData = {
-      note_id: 2
+    var data = {
+      note_id: $(this).parent().parent().find(".note_id").html()
     };
 
     $.ajax({
       type: "post",
       async: true,
       url: "/notes/share_note",
-      data: fakeData,
+      data: data,
 
       success: function (result) {
         alert(result);
@@ -252,17 +256,15 @@
   });
 
   $('.delete_note').click(function (e) {
-
-    // TODO 获取到具体是哪一条笔记？
-    var fakeData = {
-      note_id: 0
+    var data = {
+      note_id: $(this).parent().parent().find(".note_id").html()
     };
 
     $.ajax({
       type: "post",
       async: true,
       url: "/notes/delete_note",
-      data: fakeData,
+      data: data,
 
       success: function (result) {
         alert(result);
