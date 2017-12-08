@@ -37,12 +37,12 @@
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
                         <% if (now_note.is_public == 0) { %>
-                        <button class="share_note layui-btn layui-btn-sm layui-btn-normal">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
                             <i class="layui-icon">&#xe641;</i>
-                            <p class="brief_share_delete_btn_group_tip">分享</p>
+                            <p class="brief_share_delete_btn_group_tip">去分享</p>
                         </button>
                         <% } else { %>
-                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe641;</i>
                             <p class="brief_share_delete_btn_group_tip">已分享</p>
                         </button>
@@ -121,9 +121,15 @@
   });
 
   $('.share_note').click(function (e) {
+
+    var now_public = $(this).parent().parent().find(".brief_share_delete_btn_group_tip").html() === '去分享' ? 1 : 0;
     var data = {
-      note_id: $(this).parent().parent().find(".note_id").html()
+      note_id: $(this).parent().parent().find(".note_id").html(),
+      now_public: now_public
     };
+
+    var holding_btn = $(this);
+    var holding_btn_text = $(this).children("p.brief_share_delete_btn_group_tip");
 
     $.ajax({
       type: "post",
@@ -132,7 +138,17 @@
       data: data,
 
       success: function (result) {
-        alert(result);
+        // 动态修改当前样式
+        if (now_public === 1) {
+          holding_btn.removeClass('layui-btn-warm');
+          holding_btn.css("color", "white");
+          holding_btn_text.html("已分享");
+        } else {
+          holding_btn.addClass('layui-btn-warm');
+          holding_btn.css("color", "red");
+          holding_btn_text.html("去分享");
+        }
+
       },
       error: function (result) {
         alert("错误" + result);
@@ -145,6 +161,8 @@
       note_id: $(this).parent().parent().find(".note_id").html()
     };
 
+    var this_note = $(this).parent().parent().parent();
+
     $.ajax({
       type: "post",
       async: true,
@@ -153,6 +171,25 @@
 
       success: function (result) {
         alert(result);
+
+        // 直接移除当前条目笔记的html
+        this_note.empty();
+        this_note.css("padding", "0px");
+        this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
+        this_note.css("height", "0%");
+
+        // TODO 得到第一个元素
+        var first_note = this_note.siblings().eq(0);
+        alert(first_note);
+        alert("比对结果：" + first_note === this_note);
+
+        if (first_note === this_note) {
+          // 是第一条笔记，删除后续的间隔html
+          this_note.next().css("height", "0px");
+        } else {
+          // 不是第一条笔记，删除前序的间隔html
+          this_note.prev().css("height", "0px");
+        }
       },
       error: function (result) {
         alert("错误" + result);

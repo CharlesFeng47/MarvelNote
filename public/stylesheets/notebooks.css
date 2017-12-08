@@ -12,3 +12,11 @@
 .nb_cover_select {
     border: 3px solid rgba(0, 0, 0, 0);
 }
+
+.nb_description {
+    font-size: 12px;
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}

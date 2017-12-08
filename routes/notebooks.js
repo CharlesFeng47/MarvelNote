@@ -8,11 +8,14 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
 router.get('/', function (request, response, next) {
 
   db.all("select * from notebook", function (err, res) {
-    if (err) console.log(err);
-    else console.log(JSON.stringify(res));
+    if (err) {
+      console.log(err);
+      response.render('error');
+    } else {
+      console.log(JSON.stringify(res));
+      response.render('notebooks', {nb_data: res});
+    }
   });
-
-  response.render('notebooks');
 });
 
 /* add a notebook */

@@ -22,7 +22,7 @@ router.get('/', function (request, response, next) {
 router.post('/share_note', function (request, response, next) {
 
   var request_body = request.body;
-  var sql = "update note set 'is_public' = '1' where note_id = '" + request_body.note_id + "'";
+  var sql = "update note set 'is_public' = '" + request_body.now_public + "' where note_id = '" + request_body.note_id + "'";
 
   db.all(sql, function (err, res) {
     if (err) {
@@ -30,7 +30,7 @@ router.post('/share_note', function (request, response, next) {
       response.render('error')
     } else {
       console.log(JSON.stringify(res));
-      response.send('share success');
+      response.send('change share state success');
     }
   });
 });

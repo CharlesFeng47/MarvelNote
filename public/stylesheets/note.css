@@ -4,7 +4,7 @@
 
 .brief_note {
     padding: 7px;
-    border: 5px solid #159587;
+    border: 3px solid #159587;
     height: 20%;
 }
 
@@ -30,9 +30,10 @@
 }
 
 .brief_share_delete_btn_group {
+    width: 102px;
     margin-top: 2px;
     margin-right: -11px;
-    margin-left: 11px;
+    margin-left: -9px;
 }
 
 .brief_share_delete_btn_group_tip {
