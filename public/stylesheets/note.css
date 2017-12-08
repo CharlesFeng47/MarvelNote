@@ -9,14 +9,16 @@
 }
 
 .brief_note_time {
+    margin-top: 15px;
     font-size: 10px;
     color: #BDC0BA;
 }
 
 .brief_note_content {
+    margin-top: -10px;
     font-size: 13px;
     color: #BDC0BA;
-    max-height: 76px;
+    max-height: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word
@@ -31,6 +33,15 @@
     margin-top: 2px;
     margin-right: -11px;
     margin-left: 11px;
+}
+
+.brief_share_delete_btn_group_tip {
+    margin-top: -5px;
+    color: #BDC0BA;
+}
+
+.brief_separator {
+    margin-top: 29px;
 }
 
 .note_title_icon {

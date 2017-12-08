@@ -7,6 +7,7 @@
     <title>Marvel Note</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="/stylesheets/notebooks.css">
+    <link rel="stylesheet" href="/stylesheets/note.css">
     <style>
         body {
             margin: 7px;
@@ -265,62 +266,61 @@
       var layer = layui.layer;
 
       var html_content =
-        '<div class="layui-bg-black" style="width: 570px;height: 670px;margin: 10px 15px;">\n' +
+        '<div class="layui-bg-black" style="width: 570px;height: 690px;margin: 10px 15px;">\n' +
         '    <!-- 笔记本名字 -->\n' +
         '    <div class="layui-col-xs12" style="margin-left: 10px;margin-top: 10px;">\n' +
         '        <label class="layui-col-xs3" style="font-size: 18px;color: #BDC0BA">您的笔记本名称</label>\n' +
         '        <div class=" layui-col-xs4 note_title_outer" style="margin-top: -4px;">\n' +
-        '            <input type="text" class=" note_title" placeholder="默认笔记本" style="font-size: 18px">\n' +
+        '            <input id="new_nb" type="text" class=" note_title" placeholder="默认笔记本" style="font-size: 18px">\n' +
         '        </div>\n' +
         '    </div>\n' +
-        '\n' +
         '    <hr class="layui-bg-gray" style="margin-left: 10px;margin-right: 10px;">\n' +
         '    <!-- 选择笔记本封面图片 -->\n' +
-        '    <div class="layui-col-xs12" style="margin-left: 10px;margin-top: -10px;">\n' +
+        '    <div class="layui-col-xs12" style="margin: -10px 10px 10px;width: 550px;">\n' +
         '        <label class="layui-col-xs12" style="font-size: 18px;color: #BDC0BA">您的笔记本封面</label>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook0.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook1.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook2.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook3.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook4.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook5.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook6.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook7.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook8.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook9.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook10.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook11.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook12.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook13.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
-        '        <div class="select_cover layui-col-xs3">\n' +
+        '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
         '            <img alt="Background" src="/images/nb_covers/notebook14.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
         '        </div>\n' +
         '    </div>\n' +
@@ -338,27 +338,44 @@
         anim: 1,
         resize: false,
         btn: ['确认添加'],
+
+        // 点选封面之后要有改变
+        success: function () {
+            $('.select_cover').click(function () {
+              $(".select_cover").each(function () {
+                $(this).css("border", "3px solid rgba(0, 0, 0, 0)");
+              });
+              $(this).css("border", "3px solid #BDC0BA");
+            });
+          },
         yes: function (index, layero) {
           alert("xixixxi");
-          // var fakeData = {
-          //   nb_name: "笔记本",
-          //   nb_icon_id: 5,
-          //   user_id: 'charles'
-          // };
-          //
-          // $.ajax({
-          //   type: "post",
-          //   async: true,
-          //   url: "/notebooks/add_nb",
-          //   data: fakeData,
-          //
-          //   success: function (result) {
-          //     alert(result);
-          //   },
-          //   error: function (result) {
-          //     alert("错误" + result);
-          //   }
-          // });
+          alert($('#new_nb').val());
+          // alert($(this).html());
+
+          var nb_name_input = $('#new_nb').val();
+          var nb_name = nb_name_input === '' ? '默认笔记本' : nb_name_input;
+
+          // TODO 获取具体选择的封面和用户名称
+          var data = {
+            nb_name: nb_name,
+            nb_icon_id: 5,
+            user_id: 'charles'
+          };
+
+          $.ajax({
+            type: "post",
+            async: true,
+            url: "/notebooks/add_nb",
+            data: data,
+
+            success: function (result) {
+              alert(result);
+            },
+            error: function (result) {
+              alert("错误" + result);
+            }
+          });
 
         },
         cancel: function () {
@@ -387,15 +404,6 @@
         alert("错误" + result);
       }
     });
-  });
-
-  // 点选封面之后要有改变
-  $('.select_cover').click(function () {
-    alert("aaa");
-    $(".select_cover").each(function () {
-      $(this).css("border", "0px");
-    });
-    $(this).css("border", "2px solid red");
   });
 
 
