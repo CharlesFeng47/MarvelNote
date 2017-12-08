@@ -30,10 +30,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -55,10 +55,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -80,10 +80,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -105,10 +105,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -130,10 +130,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -155,10 +155,10 @@
                     </div>
                     <!-- 分享、删除按钮 -->
                     <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <button class="layui-btn layui-btn-sm layui-btn-warm">
+                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm">
                             <i class="layui-icon">&#xe641;</i>
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger">
+                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
                     </div>
@@ -227,6 +227,50 @@
 <script>
   layui.use('element', function () {
     var element = layui.element;
+  });
+
+  $('.share_note').click(function (e) {
+
+    // TODO 获取到具体是哪一条笔记？
+    var fakeData = {
+      note_id: 2
+    };
+
+    $.ajax({
+      type: "post",
+      async: true,
+      url: "/notes/share_note",
+      data: fakeData,
+
+      success: function (result) {
+        alert(result);
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
+  });
+
+  $('.delete_note').click(function (e) {
+
+    // TODO 获取到具体是哪一条笔记？
+    var fakeData = {
+      note_id: 0
+    };
+
+    $.ajax({
+      type: "post",
+      async: true,
+      url: "/notes/delete_note",
+      data: fakeData,
+
+      success: function (result) {
+        alert(result);
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
   });
 
 </script>
