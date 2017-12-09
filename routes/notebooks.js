@@ -22,8 +22,8 @@ router.get('/', function (request, response, next) {
 router.post('/add_nb', function (request, response, next) {
 
   var request_body = request.body;
-  var sql = "insert into notebook('nb_name', 'nb_icon_id', 'user_id') values('" + request_body.nb_name + "', '" +
-    request_body.nb_icon_id + "', '" + request_body.user_id + "')";
+  var sql = "insert into notebook('nb_name', 'nb_icon_id', 'user_id', 'description') values('" + request_body.nb_name + "', '" +
+    request_body.nb_icon_id + "', '" + request_body.user_id + "', '" + request_body.nb_description + "')";
 
   db.all(sql, function (err, res) {
     if (err) {
