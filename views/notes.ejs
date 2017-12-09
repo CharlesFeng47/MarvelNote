@@ -39,17 +39,17 @@
                         <% if (now_note.is_public == 0) { %>
                         <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
                             <i class="layui-icon">&#xe641;</i>
-                            <p class="brief_share_delete_btn_group_tip">去分享</p>
+                            <p class="btn_group_tip">去分享</p>
                         </button>
                         <% } else { %>
                         <button class="share_note layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe641;</i>
-                            <p class="brief_share_delete_btn_group_tip">已分享</p>
+                            <p class="btn_group_tip">已分享</p>
                         </button>
                         <% } %>
                         <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
-                            <p class="brief_share_delete_btn_group_tip">删除</p>
+                            <p class="btn_group_tip">删除</p>
                         </button>
                     </div>
                 </div>
@@ -64,36 +64,52 @@
 
     <!-- 笔记内容主体部分 -->
     <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
-        <div style="padding-top: 10px">
+        <div class="note_area">
             <!--  笔记名字 -->
-            <div class="layui-col-xs4">
+            <div class="layui-col-xs4 note_item">
                 <label class="layui-col-xs1 note_title_icon">
                     <i class="layui-icon">&#xe617;</i>
                 </label>
-                <div class="layui-col-xs8 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="您的笔记">
+                <div class="layui-col-xs10 note_title_outer">
+                    <input type="text" class=" note_title" placeholder="您的笔记名称">
                 </div>
             </div>
 
             <!-- 所属笔记本 -->
-            <div class="layui-col-xs4">
+            <div class="layui-col-xs3 note_item">
                 <label class="layui-col-xs1 note_title_icon">
                     <i class="layui-icon">&#xe622;</i>
                 </label>
-                <div class='layui-col-xs8 note_title_outer'>
+                <div class='layui-col-xs10 note_title_outer'>
                     <p class="note_title">您的笔记本</p>
                 </div>
             </div>
 
             <!-- 所属标签 -->
-            <div class="layui-col-xs4">
+            <div class="layui-col-xs3 note_item">
                 <label class="layui-col-xs1 note_title_icon">
                     <i class="layui-icon">&#xe64c;</i>
                 </label>
-                <div class="layui-col-xs8 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="默认无标签">
+                <div class="layui-col-xs10 note_title_outer">
+                    <input type="text" class=" note_title" placeholder="默认无标签" style="width: 100%">
                 </div>
             </div>
+
+            <!-- 保存／丢弃按钮 -->
+            <div class="note_save_discard_btn_group layui-btn-group layui-col-xs2 note_item">
+                <button class="save_now_note layui-btn layui-btn-sm layui-btn-normal">
+                    <i class="layui-icon">&#xe641;</i>
+                    <p class="btn_group_tip">保存</p>
+                </button>
+                <button class="discard_now_note layui-btn layui-btn-sm layui-btn-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                    <p class="btn_group_tip">删除</p>
+                </button>
+            </div>
+
+            <hr class="layui-bg-green note_separator">
+
+            <!-- summer_note -->
             <div class="note_div">
                 <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">第一次的笔记内容</div>
             </div>
@@ -122,14 +138,14 @@
 
   $('.share_note').click(function (e) {
 
-    var now_public = $(this).parent().parent().find(".brief_share_delete_btn_group_tip").html() === '去分享' ? 1 : 0;
+    var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
     var data = {
       note_id: $(this).parent().parent().find(".note_id").html(),
       now_public: now_public
     };
 
     var holding_btn = $(this);
-    var holding_btn_text = $(this).children("p.brief_share_delete_btn_group_tip");
+    var holding_btn_text = $(this).children("p.btn_group_tip");
 
     $.ajax({
       type: "post",

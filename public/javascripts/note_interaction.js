@@ -12,7 +12,7 @@ $(".note_div").click(function (e) {
         ['insert', ['table', 'picture', 'fullscreen']]
       ],
       placeholder: 'write here...',
-      height: 570,
+      height: 545,
       minHeight: null,
       maxHeight: null,
       focus: true
@@ -25,7 +25,7 @@ $(".note_div").click(function (e) {
 // body 内点击，退出 summernote
 $("body").click(function (e) {
   var markupStr = $('.mynote').summernote('code');
-  alert(markupStr);
+  // alert(markupStr);
   $('.mynote').summernote('destroy');
   if (e) e.stack;
 });
@@ -33,7 +33,7 @@ $("body").click(function (e) {
 // body 外点击，退出 summernote
 $(".fill_space").click(function (e) {
   var markupStr = $('.mynote').summernote('code');
-  alert(markupStr);
+  // alert(markupStr);
   $('.mynote').summernote('destroy');
   if (e) e.stack;
 });
