@@ -7,13 +7,71 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
 /* GET home page. */
 router.get('/', function (request, response, next) {
 
-  db.all("select * from note", function (err, res) {
+  db.all("select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id", function (err, res) {
     if (err) {
       console.log(err);
       response.render('error');
     } else {
       console.log(JSON.stringify(res));
       response.render('notes', {note_data: res});
+    }
+  });
+});
+
+/* get one particular note */
+router.get('/:cur_note_id', function (request, response, next) {
+
+  console.log(request.params.cur_note_id);
+  var sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and " +
+    "note_id = '" + request.params.cur_note_id + "'";
+
+  db.all(sql, function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error');
+    } else {
+      console.log(JSON.stringify(res));
+      response.send(res);
+    }
+  });
+});
+
+/* save note */
+router.post('/:cur_note_id', function (request, response, next) {
+
+  // 获取当前日前时间，并进行转换后存入数据库
+  var now_datetime = new Date().toISOString();
+  var date_time_separator = now_datetime.indexOf("T");
+  var date_string = now_datetime.substring(0, date_time_separator);
+  var time_string = now_datetime.substring(date_time_separator + 1, date_time_separator + 9);
+  var datetime = date_string + " " + time_string;
+  console.log(datetime);
+
+  var request_body = request.body;
+  var sql;
+  if (request_body.note_id === -1) {
+    // 这是一条新建的笔记 TODO 笔记本id
+    // sql = "insert note note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
+    //   request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.note_content +
+    //   "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
+    sql = "insert note note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
+      request_body.note_name + "', '" + 0 + "', '" + request_body.note_content +
+      "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
+  } else {
+    // 此条笔记是在原来的基础上修改
+    sql = "update note set note_name = '" + request_body.note_name + "', tag = '" + request_body.note_tag +
+      "', content = '" + request_body.note_content + "', update_time = '" + datetime +
+      "' where note_id = '" + request_body.note_id + "'";
+  }
+  console.log(sql);
+
+  db.all(sql, function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error');
+    } else {
+      console.log(JSON.stringify(res));
+      response.send("save success");
     }
   });
 });

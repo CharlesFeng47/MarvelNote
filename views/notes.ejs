@@ -69,7 +69,7 @@
 
         <!-- 笔记内容主体部分 -->
         <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
-            <% include ./note_area.ejs%>
+            <% include ./note_area.ejs %>
         </div>
 
     </div>
@@ -92,16 +92,44 @@
         var element = layui.element;
       });
 
+
+      // 根据当前第一个笔记条目（若存在）修改实际笔记区域
+      $(document).ready(function(){
+
+      });
+
+
       // 笔记单击之后变亮
       $('.brief_note').click(function () {
         $('.brief_note').each(function () {
           $(this).css("border", "3px solid #BDC0BA");
         })
         $(this).css("border", "3px solid #159587");
+        var selected_note = $(this);
 
-        // TODO 根据选取的笔记读取内容，呈现在右边
+        // 根据选取的笔记读取内容，呈现在右边
+        var cur_note_id = selected_note.find('.note_id').html();
+        alert(cur_note_id);
+
+        $.ajax({
+          type: "get",
+          async: true,
+          url: "/notes/" + cur_note_id,
+
+          success: function (result) {
+            // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
+            $('.note_area').find('#note_name_input').val(result[0].note_name);
+            $('.note_area').find('.note_nb').html(result[0].nb_name);
+            $('.note_area').find('#note_tag_input').val(result[0].tag);
+            $('.note_area').find('.mynote').html(result[0].content);
+          },
+          error: function (result) {
+            alert("错误" + result);
+          }
+        });
       });
 
+      // 左侧单条笔记分享
       $('.share_note').click(function (e) {
 
         var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
@@ -138,6 +166,7 @@
         });
       });
 
+      // 左侧单条笔记删除
       $('.delete_note').click(function (e) {
         var data = {
           note_id: $(this).parent().parent().find(".note_id").html()
@@ -179,6 +208,7 @@
       });
 
     </script>
+</div>
 </body>
 
 <% include ./footer.ejs %>

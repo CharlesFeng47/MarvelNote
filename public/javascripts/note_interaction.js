@@ -38,13 +38,32 @@ $(".fill_space").click(function (e) {
   if (e) e.stack;
 });
 
-// TODO 保存当前文档中的内容（待确定笔记本的选择）
+// 保存当前文档中的内容 TODO 待确定笔记本的选择
 $('.save_now_note').click(function () {
   var note = $(this).parent().parent();
 
-  var note_name = note.find('#note_name_input').val();
-  var note_tag = note.find('#note_tag_input').val();
-  var note_content = note.find('.mynote').html();
+  var note_data = {
+    note_id: note.find('.note_id').html(),
+    note_name: note.find('#note_name_input').val(),
+    note_tag: note.find('#note_tag_input').val(),
+    note_content: note.find('.mynote').html()
+  };
+
+  $.ajax({
+    type: "post",
+    async: true,
+    url: "/notes/save_note",
+    data: note_data,
+
+    success: function (result) {
+      // 动态修改当前样式
+
+
+    },
+    error: function (result) {
+      alert("错误" + result);
+    }
+  });
 });
 
 // 丢弃当前文档中的内容
