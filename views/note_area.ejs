@@ -1,9 +1,8 @@
+<!--根据当前第一个笔记条目（若存在）修改实际笔记区域-->
+
 <div class="note_area">
     <% if(typeof note_data != 'undefined' && note_data.length > 0) { %>
-    </p>
-    <p class="note_id2" style="display: none">
-        <% note_data[0].tag %>
-    </p>
+    <p class="note_id" style="display: none"><%= note_data[0].note_id %></p>
     <% } else { %>
     <p class="note_id" style="display: none">-1</p>
     <% } %>
@@ -16,7 +15,7 @@
         <div class="layui-col-xs10 note_title_outer">
             <% if(typeof note_data != 'undefined' && note_data.length > 0) { %>
             <input id="note_name_input" type="text" class=" note_item_word" placeholder="您的笔记名称"
-                   value="<% note_data[0].nb_name %>">
+                   value="<%= note_data[0].note_name %>">
             <% } else { %>
             <input id="note_name_input" type="text" class=" note_item_word" placeholder="您的笔记名称">
             <% } %>
@@ -31,7 +30,7 @@
         <div class='layui-col-xs10 note_title_outer'>
             <p class="note_nb note_item_word">
                 <% if(typeof note_data != 'undefined' && note_data.length > 0) { %>
-                <% note_data[0].nb_name %>
+                <%= note_data[0].nb_name %>
                 <% } else { %>
                 您的笔记本
                 <% } %>
@@ -47,7 +46,7 @@
         <div class="layui-col-xs10 note_title_outer">
             <% if(typeof note_data != 'undefined' && note_data.length > 0) { %>
             <input id="note_tag_input" type="text" class="note_item_word" placeholder="默认无标签"
-                   value="<% note_data[0].tag %>">
+                   value="<%= note_data[0].tag %>">
             <% } else { %>
             <input id="note_tag_input" type="text" class="note_item_word" placeholder="默认无标签">
             <% } %>
@@ -70,6 +69,10 @@
 
     <!-- summer_note -->
     <div class="note_div">
-        <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA"></div>
+        <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">
+            <% if(typeof note_data != 'undefined' && note_data.length > 0) { %>
+            <%= note_data[0].content %>
+            <% } %>
+        </div>
     </div>
 </div>
