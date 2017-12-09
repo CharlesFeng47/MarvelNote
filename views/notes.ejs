@@ -25,196 +25,160 @@
             <div style="height: 5px;"></div>
             <% } %>
             <% var now_note = note_data[i]; %>
-            <div class="brief_note">
-                <div style="height: 25px">
-                    <p class="note_id" style="display: none"><%= now_note.note_id %></p>
-                    <div class="layui-col-xs8">
-                        <div class="brief_note_title">
-                            <%= now_note.note_name %>
+
+            <% if (i == 0) { %>
+            <div class="brief_note" style="border: 3px solid #159587">
+                <% } else { %>
+                <div class="brief_note">
+                    <% } %>
+                    <div style="height: 25px">
+                        <p class="note_id" style="display: none"><%= now_note.note_id %></p>
+                        <div class="layui-col-xs8">
+                            <div class="brief_note_title">
+                                <%= now_note.note_name %>
+                            </div>
+                            <div class="brief_note_time"><%= now_note.update_time %></div>
                         </div>
-                        <div class="brief_note_time"><%= now_note.update_time %></div>
+                        <!-- 分享、删除按钮 -->
+                        <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                            <% if (now_note.is_public == 0) { %>
+                            <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
+                                <i class="layui-icon">&#xe641;</i>
+                                <p class="btn_group_tip">去分享</p>
+                            </button>
+                            <% } else { %>
+                            <button class="share_note layui-btn layui-btn-sm">
+                                <i class="layui-icon">&#xe641;</i>
+                                <p class="btn_group_tip">已分享</p>
+                            </button>
+                            <% } %>
+                            <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
+                                <i class="layui-icon">&#xe640;</i>
+                                <p class="btn_group_tip">删除</p>
+                            </button>
+                        </div>
                     </div>
-                    <!-- 分享、删除按钮 -->
-                    <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                        <% if (now_note.is_public == 0) { %>
-                        <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
-                            <i class="layui-icon">&#xe641;</i>
-                            <p class="btn_group_tip">去分享</p>
-                        </button>
-                        <% } else { %>
-                        <button class="share_note layui-btn layui-btn-sm">
-                            <i class="layui-icon">&#xe641;</i>
-                            <p class="btn_group_tip">已分享</p>
-                        </button>
-                        <% } %>
-                        <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
-                            <i class="layui-icon">&#xe640;</i>
-                            <p class="btn_group_tip">删除</p>
-                        </button>
+                    <hr class="layui-bg-green brief_separator">
+                    <div class="brief_note_content">
+                        <p><%= now_note.content %></p>
                     </div>
                 </div>
-                <hr class="layui-bg-green brief_separator">
-                <div class="brief_note_content">
-                    <p><%= now_note.content %></p>
-                </div>
-            </div>
-            <% } %>
-        </div>
-    </div>
-
-    <!-- 笔记内容主体部分 -->
-    <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
-        <div class="note_area">
-            <!--  笔记名字 -->
-            <div class="layui-col-xs4 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe617;</i>
-                </label>
-                <div class="layui-col-xs10 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="您的笔记名称">
-                </div>
-            </div>
-
-            <!-- 所属笔记本 -->
-            <div class="layui-col-xs3 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe622;</i>
-                </label>
-                <div class='layui-col-xs10 note_title_outer'>
-                    <p class="note_title">您的笔记本</p>
-                </div>
-            </div>
-
-            <!-- 所属标签 -->
-            <div class="layui-col-xs3 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe64c;</i>
-                </label>
-                <div class="layui-col-xs10 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="默认无标签" style="width: 100%">
-                </div>
-            </div>
-
-            <!-- 保存／丢弃按钮 -->
-            <div class="note_save_discard_btn_group layui-btn-group layui-col-xs2 note_item">
-                <button class="save_now_note layui-btn layui-btn-sm layui-btn-normal">
-                    <i class="layui-icon">&#xe641;</i>
-                    <p class="btn_group_tip">保存</p>
-                </button>
-                <button class="discard_now_note layui-btn layui-btn-sm layui-btn-danger">
-                    <i class="layui-icon">&#xe640;</i>
-                    <p class="btn_group_tip">删除</p>
-                </button>
-            </div>
-
-            <hr class="layui-bg-green note_separator">
-
-            <!-- summer_note -->
-            <div class="note_div">
-                <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">第一次的笔记内容</div>
+                <% } %>
             </div>
         </div>
+
+        <!-- 笔记内容主体部分 -->
+        <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
+            <% include ./note_area.ejs%>
+        </div>
+
     </div>
 
-</div>
-
-<!-- include libraries(jQuery, bootstrap, fontawesome) -->
-<link href="/stylesheets/bootstrap.css" rel="stylesheet">
-<link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
-<script src="/javascripts/jquery-3.2.1.min.js"></script>
-<script src="/javascripts/bootstrap.js"></script>
-<!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<script src="/javascripts/summernote-zh-CN.js"></script>
+    <!-- include libraries(jQuery, bootstrap, fontawesome) -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
+    <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <!-- include summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script src="/javascripts/summernote-zh-CN.js"></script>
 
 
-<script src="/layui/layui.js"></script>
-<script src="/javascripts/note_interaction.js"></script>
-<script>
-  layui.use('element', function () {
-    var element = layui.element;
-  });
+    <script src="/layui/layui.js"></script>
+    <script src="/javascripts/note_interaction.js"></script>
+    <script>
+      layui.use('element', function () {
+        var element = layui.element;
+      });
 
-  $('.share_note').click(function (e) {
+      // 笔记单击之后变亮
+      $('.brief_note').click(function () {
+        $('.brief_note').each(function () {
+          $(this).css("border", "3px solid #BDC0BA");
+        })
+        $(this).css("border", "3px solid #159587");
 
-    var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
-    var data = {
-      note_id: $(this).parent().parent().find(".note_id").html(),
-      now_public: now_public
-    };
+        // TODO 根据选取的笔记读取内容，呈现在右边
+      });
 
-    var holding_btn = $(this);
-    var holding_btn_text = $(this).children("p.btn_group_tip");
+      $('.share_note').click(function (e) {
 
-    $.ajax({
-      type: "post",
-      async: true,
-      url: "/notes/share_note",
-      data: data,
+        var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
+        var data = {
+          note_id: $(this).parent().parent().find(".note_id").html(),
+          now_public: now_public
+        };
 
-      success: function (result) {
-        // 动态修改当前样式
-        if (now_public === 1) {
-          holding_btn.removeClass('layui-btn-warm');
-          holding_btn.css("color", "white");
-          holding_btn_text.html("已分享");
-        } else {
-          holding_btn.addClass('layui-btn-warm');
-          holding_btn.css("color", "red");
-          holding_btn_text.html("去分享");
-        }
+        var holding_btn = $(this);
+        var holding_btn_text = $(this).children("p.btn_group_tip");
 
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
-    });
-  });
+        $.ajax({
+          type: "post",
+          async: true,
+          url: "/notes/share_note",
+          data: data,
 
-  $('.delete_note').click(function (e) {
-    var data = {
-      note_id: $(this).parent().parent().find(".note_id").html()
-    };
+          success: function (result) {
+            // 动态修改当前样式
+            if (now_public === 1) {
+              holding_btn.removeClass('layui-btn-warm');
+              holding_btn.css("color", "white");
+              holding_btn_text.html("已分享");
+            } else {
+              holding_btn.addClass('layui-btn-warm');
+              holding_btn.css("color", "red");
+              holding_btn_text.html("去分享");
+            }
 
-    var this_note = $(this).parent().parent().parent();
+          },
+          error: function (result) {
+            alert("错误" + result);
+          }
+        });
+      });
 
-    $.ajax({
-      type: "post",
-      async: true,
-      url: "/notes/delete_note",
-      data: data,
+      $('.delete_note').click(function (e) {
+        var data = {
+          note_id: $(this).parent().parent().find(".note_id").html()
+        };
 
-      success: function (result) {
-        alert(result);
+        var this_note = $(this).parent().parent().parent();
 
-        // 得到第一个元素，比较两 note_id
-        var first_note = $('.brief_note').first();
-        var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
-        alert("比对结果：" + is_first);
+        $.ajax({
+          type: "post",
+          async: true,
+          url: "/notes/delete_note",
+          data: data,
 
-        // 直接移除当前条目笔记的html
-        this_note.empty();
-        this_note.css("padding", "0px");
-        this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
-        this_note.css("height", "0%");
+          success: function (result) {
+            // 得到第一个元素，比较两 note_id
+            var first_note = $('.brief_note').first();
+            var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
+            alert("比对结果：" + is_first);
+
+            // 直接移除当前条目笔记的html
+            this_note.empty();
+            this_note.css("padding", "0px");
+            this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
+            this_note.css("height", "0%");
 
 
-        if (is_first) {
-          // 是第一条笔记，删除后续的间隔html
-          this_note.next().css("height", "0px");
-        } else {
-          // 不是第一条笔记，删除前序的间隔html
-          this_note.prev().css("height", "0px");
-        }
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
-    });
-  });
+            if (is_first) {
+              // 是第一条笔记，删除后续的间隔html
+              this_note.next().css("height", "0px");
+            } else {
+              // 不是第一条笔记，删除前序的间隔html
+              this_note.prev().css("height", "0px");
+            }
+          },
+          error: function (result) {
+            alert("错误" + result);
+          }
+        });
+      });
 
-</script>
+    </script>
 </body>
 
 <% include ./footer.ejs %>

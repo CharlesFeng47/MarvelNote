@@ -18,56 +18,7 @@
     <% include ./header.ejs %>
 
     <div class="layui-side layui-bg-black" style="width: 99%;margin: 15px 7px 7px;top: 53px;">
-        <div class="note_area">
-            <!--  笔记名字 -->
-            <div class="layui-col-xs4 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe617;</i>
-                </label>
-                <div class="layui-col-xs10 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="您的笔记名称">
-                </div>
-            </div>
-
-            <!-- 所属笔记本 -->
-            <div class="layui-col-xs3 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe622;</i>
-                </label>
-                <div class='layui-col-xs10 note_title_outer'>
-                    <p class="note_title">您的笔记本</p>
-                </div>
-            </div>
-
-            <!-- 所属标签 -->
-            <div class="layui-col-xs3 note_item">
-                <label class="layui-col-xs1 note_title_icon">
-                    <i class="layui-icon">&#xe64c;</i>
-                </label>
-                <div class="layui-col-xs10 note_title_outer">
-                    <input type="text" class=" note_title" placeholder="默认无标签" style="width: 100%">
-                </div>
-            </div>
-
-            <!-- 保存／丢弃按钮 -->
-            <div class="note_save_discard_btn_group layui-btn-group layui-col-xs2 note_item">
-                <button class="save_now_note layui-btn layui-btn-sm layui-btn-normal">
-                    <i class="layui-icon">&#xe641;</i>
-                    <p class="btn_group_tip">保存</p>
-                </button>
-                <button class="discard_now_note layui-btn layui-btn-sm layui-btn-danger">
-                    <i class="layui-icon">&#xe640;</i>
-                    <p class="btn_group_tip">删除</p>
-                </button>
-            </div>
-
-            <hr class="layui-bg-green note_separator">
-
-            <!-- summer_note -->
-            <div class="note_div">
-                <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">第一次的笔记内容</div>
-            </div>
-        </div>
+        <% include ./note_area.ejs%>
     </div>
 </div>
 
