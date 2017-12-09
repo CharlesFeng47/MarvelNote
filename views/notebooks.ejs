@@ -37,12 +37,13 @@
                 <div class="layui-col-xs3">
                     <div class="nb1">
                         <label class="layui-col-xs12" style="text-align: center">
-                            <img alt="Background" src="/images/nb_covers/notebook<%=now_nb.nb_icon_id%>.png" style="max-width: 100% ">
+                            <img alt="Background" src="/images/nb_covers/notebook<%= now_nb.nb_icon_id %>.png"
+                                 style="max-width: 100% ">
                         </label>
-                        <p class="nb_id" style="display: none"><%=now_nb.nb_id%></p>
-                        <h4 class="layui-col-xs12" style="text-align: center"><%=now_nb.nb_name%></h4>
+                        <p class="nb_id" style="display: none"><%= now_nb.nb_id %></p>
+                        <h4 class="layui-col-xs12" style="text-align: center"><%= now_nb.nb_name %></h4>
                         <p class="layui-col-xs12 nb_description">
-                            描述：<%=now_nb.description%></p>
+                            描述：<%= now_nb.description %></p>
                         <button class="delete_nb layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
                             <i class="layui-icon">&#xe640;</i>
                         </button>
@@ -71,6 +72,7 @@
     layui.define(['layer'], function (exports) {
       var layer = layui.layer;
 
+      // TODO 笔记本的描述
       var html_content =
         '<div class="layui-bg-black" style="width: 570px;height: 690px;margin: 10px 15px;">\n' +
         '    <!-- 笔记本名字 -->\n' +
@@ -132,7 +134,7 @@
         '    </div>\n' +
         '</div>';
 
-      // TODO 调用模态框输入笔记本的姓名，并选择样式，再保存
+      // 调用模态框输入笔记本的姓名，并选择样式，再保存
       layer.open({
         type: 1,
         title: ['添加笔记本', 'font-size:24px;color:#393D48'],
@@ -147,26 +149,33 @@
 
         // 点选封面之后要有改变
         success: function () {
-            $('.select_cover').click(function () {
-              $(".select_cover").each(function () {
-                $(this).css("border", "3px solid rgba(0, 0, 0, 0)");
-              });
-              $(this).css("border", "3px solid #BDC0BA");
+          $('.select_cover').click(function () {
+            $(".select_cover").each(function () {
+              $(this).css("border", "3px solid rgba(0, 0, 0, 0)");
+              $(this).removeClass("cover_selected");
             });
-          },
+            $(this).css("border", "3px solid #BDC0BA");
+            $(this).addClass("cover_selected");
+          });
+        },
         yes: function (index, layero) {
-          alert("xixixxi");
-          alert($('#new_nb').val());
-          // alert($(this).html());
-
           var nb_name_input = $('#new_nb').val();
           var nb_name = nb_name_input === '' ? '默认笔记本' : nb_name_input;
 
-          // TODO 获取具体选择的封面和用户名称
+          var cover_selected_string = $('.cover_selected').html();
+          var cover_selected_start_index = cover_selected_string.indexOf("notebook") + 8;
+          var cover_selected_end_index = cover_selected_string.indexOf(".png");
+          var cover_selected_icon_id = cover_selected_string.substring(cover_selected_start_index, cover_selected_end_index);
+
+          var cur_user_string = $('#cur_user').html();
+          var cur_user_end_index = cur_user_string.indexOf("<span");
+          var cur_user_id = cur_user_string.substring(0, cur_user_end_index);
+
+          // 获取具体选择的封面和用户名称
           var data = {
             nb_name: nb_name,
-            nb_icon_id: 5,
-            user_id: 'charles'
+            nb_icon_id: cover_selected_icon_id,
+            user_id: cur_user_id
           };
 
           $.ajax({

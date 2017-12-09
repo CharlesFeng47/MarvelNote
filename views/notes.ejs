@@ -172,24 +172,25 @@
       success: function (result) {
         alert(result);
 
+        // 得到第一个元素，比较两 note_id
+        var first_note = $('.brief_note').first();
+        var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
+        alert("比对结果：" + is_first);
+
         // 直接移除当前条目笔记的html
         this_note.empty();
         this_note.css("padding", "0px");
         this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
         this_note.css("height", "0%");
 
-        // TODO 得到第一个元素
-        var first_note = this_note.parent().find(".brief_note").eq(0);
-        alert(first_note);
-        alert("比对结果：" + first_note === this_note);
 
-        <!--if (first_note === this_note) {-->
+        if (is_first) {
           // 是第一条笔记，删除后续的间隔html
-          <!--this_note.next().css("height", "0px");-->
-        <!--} else {-->
+          this_note.next().css("height", "0px");
+        } else {
           // 不是第一条笔记，删除前序的间隔html
-          <!--this_note.prev().css("height", "0px");-->
-        <!--}-->
+          this_note.prev().css("height", "0px");
+        }
       },
       error: function (result) {
         alert("错误" + result);
