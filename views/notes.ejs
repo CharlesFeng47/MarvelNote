@@ -60,7 +60,7 @@
                     </div>
                     <hr class="layui-bg-green brief_separator">
                     <div class="brief_note_content">
-                        <p><%= now_note.content %></p>
+                        <%= now_note.content %>
                     </div>
                 </div>
                 <% } %>
@@ -111,6 +111,7 @@
 
           success: function (result) {
             // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
+            $('.note_area').find('.note_id').html(cur_note_id);
             $('.note_area').find('#note_name_input').val(result[0].note_name);
             $('.note_area').find('.note_nb').html(result[0].nb_name);
             $('.note_area').find('#note_tag_input').val(result[0].tag);

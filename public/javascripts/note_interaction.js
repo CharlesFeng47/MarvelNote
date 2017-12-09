@@ -42,11 +42,13 @@ $(".fill_space").click(function (e) {
 $('.save_now_note').click(function () {
   var note = $(this).parent().parent();
 
+  // summer_note先保存
+  $('.mynote').summernote('destroy');
   var note_data = {
     note_id: note.find('.note_id').html(),
     note_name: note.find('#note_name_input').val(),
     note_tag: note.find('#note_tag_input').val(),
-    note_content: note.find('.mynote').html()
+    content: note.find('.mynote').html()
   };
 
   $.ajax({
@@ -57,8 +59,14 @@ $('.save_now_note').click(function () {
 
     success: function (result) {
       // 动态修改当前样式
-
-
+      var cur_save_now_note_id = note.find('.note_id').html();
+      $('.brief_note').each(function () {
+        if ($(this).find('.note_id').html() === cur_save_now_note_id) {
+          $(this).find('.brief_note_title').html(result.note_name);
+          $(this).find('.brief_note_time').html(result.update_time);
+          $(this).find('.brief_note_content').html(result.content);
+        }
+      });
     },
     error: function (result) {
       alert("错误" + result);
