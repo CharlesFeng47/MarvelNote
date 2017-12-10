@@ -6,7 +6,7 @@
     <p class="nb_id" style="display: none"><%= note_data[0].nb_id %></p>
     <% } else { %>
     <p class="note_id" style="display: none">-1</p>
-    <p class="nb_id" style="display: none">-1</p>
+    <p class="nb_id" style="display: none"><%= default_nb[0].nb_id %></p>
     <% } %>
 
     <!--  笔记名字 -->
@@ -42,7 +42,7 @@
             <i class="layui-icon">&#xe671;</i>
         </label>
         <!--<button class="layui-col-xs-offset1 layui-col-xs1 layui-btn layui-btn-sm layui-btn-warm">-->
-            <!--<i class="layui-icon">&#xe671;</i>-->
+        <!--<i class="layui-icon">&#xe671;</i>-->
         <!--</button>-->
     </div>
 

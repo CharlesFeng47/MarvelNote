@@ -9,7 +9,7 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  */
 router.get('/', function (request, response, next) {
 
-  db.all("select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id", function (err, res) {
+  db.all("select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc", function (err, res) {
     if (err) {
       console.log(err);
       response.render('error');
@@ -51,9 +51,9 @@ router.post('/save_note', function (request, response, next) {
 
   var request_body = request.body;
   var sql;
-  if (request_body.note_id === -1) {
+  if (request_body.note_id === "-1") {
     // 这是一条新建的笔记
-    sql = "insert note note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
+    sql = "insert into note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
       request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.content +
       "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
   } else {
