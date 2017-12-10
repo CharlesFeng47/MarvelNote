@@ -1,0 +1,37 @@
+.table_area {
+    padding: 20px 200px;
+}
+
+.table_title {
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table_line {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.table_item {
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*对表格中一项进行按钮操作*/
+.table_item_op_btn {
+    margin-top: -3px;
+}
+
+.table_item_op_btn_tip {
+    color: #BDC0BA;
+}
+
+.table_header_items_separator {
+    margin: 0px;
+}
+
+.table_item_separator {
+    margin: 0px 25px;
+}
