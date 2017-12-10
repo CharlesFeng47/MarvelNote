@@ -21,6 +21,7 @@
     <!-- 笔记的左边导航部分 -->
     <div class="layui-side layui-bg-black" style="margin-left: 7px;margin-top: 15px; margin-bottom: 7px; top: 53px;">
         <div class="layui-side-scroll">
+            <% if(has_note === true) { %>
             <% for (var i = 0; i < note_data.length; i++) { %>
             <% if (i != 0) { %>
             <div style="height: 5px;"></div>
@@ -64,6 +65,7 @@
                         <%= now_note.content %>
                     </div>
                 </div>
+                <% } %>
                 <% } %>
             </div>
         </div>

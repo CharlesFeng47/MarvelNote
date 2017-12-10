@@ -111,18 +111,20 @@ $('#change_nb').click(function () {
       layui.define(['layer'], function (exports) {
         var layer = layui.layer;
 
-        var layer_height = Math.ceil(result.length / 4) * 174.5 + 10;
+        var layer_height = Math.ceil(result.length / 4) * 174.5 + 20;
         var html_content =
           '<div class="layui-bg-black" style="width: 570px;height: ' + layer_height + 'px;margin: 10px 15px;">\n' +
           '    <!-- 选择笔记本封面图片 -->\n' +
-          '    <div class="layui-col-xs12" style="margin: 10px 10px 0px;;width: 550px;">\n';
+          '    <div class="layui-col-xs12" style="margin: 10px 10px;width: 550px;">\n';
 
         for (var i = 0; i < result.length; i++) {
           html_content
             += (
             '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
-            '            <img alt="Background" src="/images/nb_covers/notebook0.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
-            '            <p class="nb_id" style="display: none">')
+            '            <img alt="Background" src="/images/nb_covers/notebook')
+            + (result[i].nb_icon_id)
+            + ('.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
+              '            <p class="nb_id" style="display: none">')
             + (result[i].nb_id)
             + ('</p>\n' +
               '            <p class="nb_name layui-col-xs12" style="font-size: 12px;text-align: center">')

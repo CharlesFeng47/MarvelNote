@@ -14,8 +14,23 @@ router.get('/', function (request, response, next) {
       console.log(err);
       response.render('error');
     } else {
-      console.log(JSON.stringify(res));
-      response.render('notes', {note_data: res});
+      var wanted_notes = res;
+      console.log(JSON.stringify(wanted_notes));
+
+      if (wanted_notes.length === 0) {
+        // 用户没有笔记本，呈现默认的笔记本、
+        db.all("select * from notebook limit 1", function (err, res) {
+          if (err) {
+            console.log(err);
+            response.render('error');
+          } else {
+            console.log(JSON.stringify(res));
+            response.render('notes', {has_note: false, default_nb: res});
+          }
+        });
+      } else {
+        response.render('notes', {has_note: true, note_data: wanted_notes});
+      }
     }
   });
 });
@@ -110,7 +125,7 @@ router.post('/delete_note', function (request, response, next) {
 router.get('/:cur_note_id', function (request, response, next) {
 
   console.log(request.params.cur_note_id);
-  var sql = "select note.*, notebook.nb_name, notebook.nb_id from note, notebook where note.nb_id = notebook.nb_id and " +
+  var sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and " +
     "note_id = '" + request.params.cur_note_id + "'";
 
   db.all(sql, function (err, res) {
