@@ -9,7 +9,19 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  */
 router.get('/', function (request, response, next) {
 
-  db.all("select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc", function (err, res) {
+  console.log(request.query);
+  console.log(typeof request.query.nb_id === 'undefined');
+
+  var sql;
+  if (typeof request.query.nb_id === 'undefined') {
+    sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc";
+  } else {
+    sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '" + request.query.nb_id
+      + "' order by note.update_time desc";
+  }
+
+  console.log(sql);
+  db.all(sql, function (err, res) {
     if (err) {
       console.log(err);
       response.render('error');

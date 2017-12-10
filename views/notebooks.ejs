@@ -34,7 +34,7 @@
             <div class="layui-col-xs12">
                 <% for (var i = 0; i < nb_data.length; i++) { %>
                 <% var now_nb = nb_data[i]; %>
-                <div class="layui-col-xs3">
+                <div class="nb_area layui-col-xs3">
                     <% if (i < 4) { %>
                     <div class="nb1">
                         <% } else { %>
@@ -71,6 +71,9 @@
         var element = layui.element;
       });
 
+      /**
+       * 新建一本笔记本
+       */
       $('.add_nb').click(function (e) {
 
         layui.define(['layer'], function (exports) {
@@ -218,6 +221,9 @@
         });
       });
 
+      /**
+       * 删除一本笔记本
+       */
       $('.delete_nb').click(function (e) {
         var data = {
           nb_id: $(this).parent().find(".nb_id").html()
@@ -266,6 +272,14 @@
             alert("错误" + result);
           }
         });
+      });
+
+      /**
+       * 点击一本笔记本，跳转查看该笔记本中的所有笔记
+       */
+      $('.nb_area').click(function () {
+        var this_nb_id = $(this).find('.nb_id').html();
+        window.location.href = "/notes?nb_id=" + this_nb_id;
       });
 
 
