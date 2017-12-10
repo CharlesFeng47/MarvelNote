@@ -37,17 +37,14 @@ router.post('/save_note', function (request, response, next) {
   var request_body = request.body;
   var sql;
   if (request_body.note_id === -1) {
-    // 这是一条新建的笔记 TODO 笔记本id
-    // sql = "insert note note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
-    //   request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.content +
-    //   "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
+    // 这是一条新建的笔记
     sql = "insert note note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
-      request_body.note_name + "', '" + 0 + "', '" + request_body.content +
+      request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.content +
       "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
   } else {
     // 此条笔记是在原来的基础上修改
     sql = "update note set note_name = '" + request_body.note_name + "', tag = '" + request_body.note_tag +
-      "', content = '" + request_body.content + "', update_time = '" + datetime +
+      "', content = '" + request_body.content + "', update_time = '" + datetime + "', nb_id = '" + request_body.nb_id +
       "' where note_id = '" + request_body.note_id + "'";
   }
   console.log(sql);
@@ -113,7 +110,7 @@ router.post('/delete_note', function (request, response, next) {
 router.get('/:cur_note_id', function (request, response, next) {
 
   console.log(request.params.cur_note_id);
-  var sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and " +
+  var sql = "select note.*, notebook.nb_name, notebook.nb_id from note, notebook where note.nb_id = notebook.nb_id and " +
     "note_id = '" + request.params.cur_note_id + "'";
 
   db.all(sql, function (err, res) {

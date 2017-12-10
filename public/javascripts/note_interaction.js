@@ -1,4 +1,6 @@
-// 初始化 summernote
+/**
+ * 初始化 summer_note
+ */
 $(".note_div").click(function (e) {
   $('.mynote').summernote({
       lang: 'zh-CN',
@@ -22,7 +24,9 @@ $(".note_div").click(function (e) {
 });
 
 
-// body 内点击，退出 summernote
+/**
+ * body 内点击，退出 summernote
+ */
 $("body").click(function (e) {
   var markupStr = $('.mynote').summernote('code');
   // alert(markupStr);
@@ -30,7 +34,9 @@ $("body").click(function (e) {
   if (e) e.stack;
 });
 
-// body 外点击，退出 summernote
+/**
+ * body 外点击，退出 summernote
+ */
 $(".fill_space").click(function (e) {
   var markupStr = $('.mynote').summernote('code');
   // alert(markupStr);
@@ -38,7 +44,9 @@ $(".fill_space").click(function (e) {
   if (e) e.stack;
 });
 
-// 保存当前文档中的内容 TODO 待确定笔记本的选择
+/**
+ * 保存当前文档中的内容
+ */
 $('.save_now_note').click(function () {
   var note = $(this).parent().parent();
 
@@ -48,7 +56,8 @@ $('.save_now_note').click(function () {
     note_id: note.find('.note_id').html(),
     note_name: note.find('#note_name_input').val(),
     note_tag: note.find('#note_tag_input').val(),
-    content: note.find('.mynote').html()
+    content: note.find('.mynote').html(),
+    nb_id: note.find('.nb_id').html()
   };
 
   $.ajax({
@@ -74,11 +83,105 @@ $('.save_now_note').click(function () {
   });
 });
 
-// 丢弃当前文档中的内容
+/**
+ * 丢弃当前文档中的内容
+ */
 $('.discard_now_note').click(function () {
   var note = $(this).parent().parent();
 
   note.find('#note_name_input').val("");
   note.find('#note_tag_input').val("");
   note.find('.mynote').html("");
+});
+
+/**
+ * 更换笔记所在的笔记本
+ */
+$('#change_nb').click(function () {
+  var cur_note_area = $(this).parent().parent();
+
+  // 先从数据库中取出该用户的所有笔记本
+  $.ajax({
+    type: "get",
+    async: true,
+    url: "/notebooks/all",
+
+    success: function (result) {
+      // 将该用户的笔记本填充进去
+      layui.define(['layer'], function (exports) {
+        var layer = layui.layer;
+
+        var layer_height = Math.ceil(result.length / 4) * 174.5 + 10;
+        var html_content =
+          '<div class="layui-bg-black" style="width: 570px;height: ' + layer_height + 'px;margin: 10px 15px;">\n' +
+          '    <!-- 选择笔记本封面图片 -->\n' +
+          '    <div class="layui-col-xs12" style="margin: 10px 10px 0px;;width: 550px;">\n';
+
+        for (var i = 0; i < result.length; i++) {
+          html_content
+            += (
+            '        <div class="select_cover layui-col-xs3 nb_cover_select">\n' +
+            '            <img alt="Background" src="/images/nb_covers/notebook0.png" style="max-width: 100%;padding: 5px;margin: 5px;">\n' +
+            '            <p class="nb_id" style="display: none">')
+            + (result[i].nb_id)
+            + ('</p>\n' +
+              '            <p class="nb_name layui-col-xs12" style="font-size: 12px;text-align: center">')
+            + (result[i].nb_name)
+            + ('</p>\n' +
+              '        </div>\n');
+        }
+
+        html_content += ('</div></div>');
+
+        // 调用模态框输入笔记本的姓名，并选择样式，再保存
+        layer.open({
+          type: 1,
+          title: ['修改所属笔记本', 'font-size:24px;color:#393D48'],
+          content: html_content,
+          skin: 'layui-layer-blu',
+          area: ['600px', '360px'],
+          move: false,
+          shade: [0.75, '#000'],
+          anim: 1,
+          resize: false,
+          btn: ['确认修改'],
+
+          success: function () {
+            // 一开始设置原本的笔记本高亮
+            var pre_nb_id = cur_note_area.find('.nb_id').html();
+            $(".select_cover").each(function () {
+              if ($(this).find('.nb_id').html() === pre_nb_id) {
+                $(this).css("border", "3px solid #BDC0BA");
+                $(this).addClass("cover_selected");
+              }
+            });
+
+            // 点选封面之后要有改变
+            $('.select_cover').click(function () {
+              $(".select_cover").each(function () {
+                $(this).css("border", "3px solid rgba(0, 0, 0, 0)");
+                $(this).removeClass("cover_selected");
+              });
+              $(this).css("border", "3px solid #BDC0BA");
+              $(this).addClass("cover_selected");
+            });
+          },
+          yes: function (index, layero) {
+            // 修改 note_area 的笔记本区域
+            cur_note_area.find('.nb_id').html($('.cover_selected').find('.nb_id').html());
+            cur_note_area.find('#note_nb').html($('.cover_selected').find('.nb_name').html());
+            layer.close(index);
+          },
+          cancel: function () {
+
+          },
+          closeBtn: 2
+        });
+      });
+
+    },
+    error: function (result) {
+      alert("错误" + result);
+    }
+  });
 });

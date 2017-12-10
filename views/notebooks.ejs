@@ -81,15 +81,17 @@
             '    <!-- 笔记本名字 -->\n' +
             '    <div class="layui-col-xs12" style="margin-left: 10px;margin-top: 10px;">\n' +
             '        <label class="layui-col-xs3" style="font-size: 18px;color: #BDC0BA">您的笔记本名称</label>\n' +
-            '        <div class=" layui-col-xs4 note_title_outer" style="margin-top: -4px;">\n' +
-            '            <input id="new_nb_name" type="text" class=" note_title" placeholder="默认笔记本" style="font-size: 18px">\n' +
+            '        <div class=" layui-col-xs7 note_title_outer" style="margin-top: -4px;">\n' +
+            '            <input id="new_nb_name" type="text" maxlength="10" class=" new_nb_item_word" ' +
+            'placeholder="默认笔记本（最长10个字）" style="font-size: 18px">\n' +
             '        </div>\n' +
             '    </div>\n' +
             '    <!-- 笔记本描述 -->\n' +
             '    <div class="layui-col-xs12" style="margin-left: 10px;">\n' +
             '        <label class="layui-col-xs3" style="font-size: 18px;color: #BDC0BA">您的笔记本描述</label>\n' +
-            '        <div class=" layui-col-xs4 note_title_outer" style="margin-top: -4px;">\n' +
-            '            <input id="new_nb_content" type="text" class=" note_title" placeholder="您的一本默认笔记本" style="font-size: 18px">\n' +
+            '        <div class=" layui-col-xs7 note_title_outer" style="margin-top: -4px;">\n' +
+            '            <input id="new_nb_content" type="text" maxlength="37" class=" new_nb_item_word" ' +
+            'placeholder="您的一本默认笔记本（最长37个字）" style="font-size: 18px">\n' +
             '        </div>\n' +
             '    </div>\n' +
             '    <hr class="layui-bg-gray" style="margin-left: 10px;margin-right: 10px;">\n' +
@@ -157,8 +159,8 @@
             resize: false,
             btn: ['确认添加'],
 
-            // 点选封面之后要有改变
             success: function () {
+              // 点选封面之后要有改变
               $('.select_cover').click(function () {
                 $(".select_cover").each(function () {
                   $(this).css("border", "3px solid rgba(0, 0, 0, 0)");

@@ -20,3 +20,13 @@
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
+
+/* 新建笔记本的提示字 */
+.new_nb_item_word {
+    font-size: 17px;
+    color: #BDC0BA;
+    border-color: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    margin-top: 2px;
+    width: 100%;
+}

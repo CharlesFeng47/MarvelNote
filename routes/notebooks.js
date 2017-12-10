@@ -4,7 +4,9 @@ var router = express.Router();
 var sqlite = require('sqlite3');
 var db = new sqlite.Database('./MarvelNote.sqlite');
 
-/* GET home page. */
+/**
+ * 笔记本主页的界面
+ */
 router.get('/', function (request, response, next) {
 
   db.all("select * from notebook", function (err, res) {
@@ -18,7 +20,25 @@ router.get('/', function (request, response, next) {
   });
 });
 
-/* add a notebook */
+/**
+ * 获取所有的笔记本信息
+ */
+router.get('/all', function (request, response, next) {
+
+  db.all("select * from notebook", function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error');
+    } else {
+      console.log(JSON.stringify(res));
+      response.send(res);
+    }
+  });
+});
+
+/**
+ * 添加一本笔记本
+ */
 router.post('/add_nb', function (request, response, next) {
 
   var request_body = request.body;
@@ -36,7 +56,9 @@ router.post('/add_nb', function (request, response, next) {
   });
 });
 
-/* delete a notebook */
+/**
+ * 删除一本笔记本
+ */
 router.post('/delete_nb', function (request, response, next) {
 
   var request_body = request.body;
