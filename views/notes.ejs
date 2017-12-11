@@ -160,6 +160,10 @@
           holding_btn_text.html("去分享");
         }
 
+        // 动态修改当前笔记的修改时间
+        var brief_note_time = holding_btn.parent().parent().find('.brief_note_time');
+        brief_note_time.html(result);
+
       },
       error: function (result) {
         alert("错误" + result);

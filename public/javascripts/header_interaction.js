@@ -90,43 +90,22 @@ $('#modify_pwd').click(function () {
 });
 
 /**
- * TODO 退出登录
+ * 退出登录
  */
 $('#exit').click(function () {
-  alert("exit");
-  // var this_user = $(this).parent().parent().parent().parent();
-  // var data = {
-  //   user_id: this_user.find('.user_id').html()
-  // };
-  //
-  // $.ajax({
-  //   type: "post",
-  //   async: true,
-  //   url: "/users/delete",
-  //   data: data,
-  //
-  //   success: function (result) {
-  //     alert(result);
-  //
-  //     // 动态修改用户界面
-  //     // 得到第一个元素，比较两 note_id
-  //     var first_uesr = $('.table_line').first();
-  //     var is_first = first_uesr.find('.user_id').html() === this_user.find('.user_id').html();
-  //     alert("比对结果：" + is_first);
-  //
-  //     // 直接移除当前条目笔记的html
-  //     this_user.empty();
-  //     this_user.removeClass("table_line");
-  //     if (is_first) {
-  //       // 是第一个用户，删除后续的间隔html
-  //       this_user.next().css("display", "none");
-  //     } else {
-  //       // 不是第一个用户，删除前序的间隔html
-  //       this_user.prev().css("display", "none");
-  //     }
-  //   },
-  //   error: function (result) {
-  //     alert("错误" + result);
-  //   }
-  // });
+  $.ajax({
+    type: "post",
+    async: true,
+    url: "/log_out",
+
+    success: function (result) {
+      if (result === "0") {
+        console.log("退出成功");
+        window.location.href = "/";
+      }
+    },
+    error: function (result) {
+      alert("错误" + result);
+    }
+  });
 });

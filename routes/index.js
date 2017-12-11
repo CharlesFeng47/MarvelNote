@@ -11,7 +11,7 @@ router.get('/', function(request, response, next) {
   if (request.session.cur_user) {
     console.log("--------- LOG IN: " + request.session.cur_user);
     if (request.session.cur_user_type === 0) {
-      db.all("select * from notebook limit 1", function (err, res) {
+      db.all("select * from notebook where user_id = '" + request.session.cur_user + "' limit 1", function (err, res) {
         if (err) {
           console.log(err);
           response.render('error');

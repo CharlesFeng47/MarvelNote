@@ -18,7 +18,7 @@ $('.sign_up').click(function () {
         alert("该用户编号已被注册，请使用其他编号！");
       } else {
         alert("注册成功！");
-
+        window.location.href="/index";
       }
     },
     error: function (result) {
@@ -46,11 +46,11 @@ $('.log_in').click(function () {
       if (result === "-1") {
         alert("该用户编号还未被注册，请注册后再登录！");
       } else if (result === "0") {
-        alert("普通用户登录成功！");
+        window.location.href="/index";
       } else if (result === "1") {
         alert("密码错误！")
       } else if (result === "2") {
-        alert("管理员登录成功！")
+        window.location.href="/admin";
       }
     },
     error: function (result) {

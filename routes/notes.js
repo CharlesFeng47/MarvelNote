@@ -17,10 +17,11 @@ router.get('/', function (request, response, next) {
 
       var sql;
       if (typeof request.query.nb_id === 'undefined') {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc";
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id " +
+          "and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
       } else {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '" + request.query.nb_id
-          + "' order by note.update_time desc";
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '"
+          + request.query.nb_id + "'and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
       }
 
       console.log(sql);
@@ -64,14 +65,6 @@ router.get('/', function (request, response, next) {
  */
 router.post('/save_note', function (request, response, next) {
 
-  // 获取当前日前时间，并进行转换后存入数据库
-  var now_datetime = new Date().toISOString();
-  var date_time_separator = now_datetime.indexOf("T");
-  var date_string = now_datetime.substring(0, date_time_separator);
-  var time_string = now_datetime.substring(date_time_separator + 1, date_time_separator + 9);
-  var datetime = date_string + " " + time_string;
-  console.log("NOW DATETIME: " + datetime);
-
   var request_body = request.body;
   var sql;
   if (request_body.note_id === "-1") {
@@ -82,7 +75,7 @@ router.post('/save_note', function (request, response, next) {
   } else {
     // 此条笔记是在原来的基础上修改
     sql = "update note set note_name = '" + request_body.note_name + "', tag = '" + request_body.note_tag +
-      "', content = '" + request_body.content + "', update_time = '" + datetime + "', nb_id = '" + request_body.nb_id +
+      "', content = '" + request_body.content + "', update_time = '" + get_cur_datetime() + "', nb_id = '" + request_body.nb_id +
       "' where note_id = '" + request_body.note_id + "'";
   }
   console.log(sql);
@@ -108,8 +101,10 @@ router.post('/save_note', function (request, response, next) {
 router.post('/share_note', function (request, response, next) {
 
   console.log("share begin");
+  var update_time = get_cur_datetime();
   var request_body = request.body;
-  var sql = "update note set 'is_public' = '" + request_body.now_public + "' where note_id = '" + request_body.note_id + "'";
+  var sql = "update note set is_public = '" + request_body.now_public + "', update_time = '" + update_time
+    + "' where note_id = '" + request_body.note_id + "'";
   console.log("share sql: " + sql);
 
   db.all(sql, function (err, res) {
@@ -118,7 +113,7 @@ router.post('/share_note', function (request, response, next) {
       response.render('error')
     } else {
       console.log(JSON.stringify(res));
-      response.send('change share state success');
+      response.send(update_time);
     }
   });
 });
@@ -161,5 +156,18 @@ router.get('/:cur_note_id', function (request, response, next) {
     }
   });
 });
+
+/**
+ * 获取当前日前时间，并进行转换后存入数据库
+ */
+function get_cur_datetime() {
+  var now_datetime = new Date().toISOString();
+  var date_time_separator = now_datetime.indexOf("T");
+  var date_string = now_datetime.substring(0, date_time_separator);
+  var time_string = now_datetime.substring(date_time_separator + 1, date_time_separator + 9);
+  var datetime = date_string + " " + time_string;
+  console.log("NOW DATETIME: " + datetime);
+  return datetime;
+}
 
 module.exports = router;
