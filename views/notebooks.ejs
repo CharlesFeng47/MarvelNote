@@ -22,8 +22,18 @@
     <div class="layui-side layui-bg-black" style="width: 99%;margin: 15px 7px 7px;top: 53px;">
         <div class="layui-side-scroll" style="width: 100%;padding: 15px;padding-bottom: 25px">
 
+            <!-- 笔记本搜索 -->
+            <div class="layui-col-xs-offset1 layui-col-xs5">
+                <label class="layui-col-xs1 note_title_icon">
+                    <i class="layui-icon">&#xe615;</i>
+                </label>
+                <div class=" layui-col-xs10 note_title_outer" style="margin-top: -4px;">
+                    <input id="search" type="text" maxlength="15" class=" new_nb_item_word"
+                           placeholder="搜索笔记本名称／内容" style="font-size: 18px">
+                </div>
+            </div>
             <!-- 添加按钮 -->
-            <div class="layui-col-xs-offset10 layui-col-xs2">
+            <div class="layui-col-xs-offset4 layui-col-xs2">
                 <p class="layui-col-xs-offset2 layui-col-xs6"
                    style="font-size:16px;text-align: right;margin-top: 6px;margin-right: 5px">添加笔记本</p>
                 <button class="add_nb layui-col-xs2 layui-btn layui-btn-radius layui-btn-sm layui-btn">
@@ -33,14 +43,14 @@
 
             <!-- 笔记本 -->
             <!-- TODO 没有笔记的情况 -->
-            <div class="layui-col-xs12">
+            <div class="all_nbs layui-col-xs12">
                 <% for (var i = 0; i < nb_data.length; i++) { %>
                 <% var now_nb = nb_data[i]; %>
                 <div class="nb_area layui-col-xs3">
                     <% if (i < 4) { %>
-                    <div class="nb1">
+                    <div class="nb1 nb_content">
                         <% } else { %>
-                        <div class="nb2">
+                        <div class="nb2 nb_content">
                             <% } %>
                             <label class="nb_icon_area layui-col-xs12" style="text-align: center">
                                 <img alt="Background" src="/images/nb_covers/notebook<%= now_nb.nb_icon_id %>.png"
@@ -72,6 +82,8 @@
 <script src="/javascripts/header_interaction.js"></script>
 
 <script>
+  $(document).ready(all_nbs_listeners);
+
   layui.use('element', function () {
     var element = layui.element;
   });
@@ -226,75 +238,118 @@
     });
   });
 
-  /**
-   * 删除一本笔记本
-   */
-  $('.delete_nb').click(function (e) {
-    var data = {
-      nb_id: $(this).parent().find(".nb_id").html()
-    };
 
-    var this_note = $(this).parent().parent();
+  function all_nbs_listeners() {
+    /**
+     * 删除一本笔记本
+     */
+    $('.delete_nb').click(function (e) {
+      var data = {
+        nb_id: $(this).parent().find(".nb_id").html()
+      };
 
-    $.ajax({
-      type: "post",
-      async: true,
-      url: "/notebooks/delete_nb",
-      data: data,
+      var this_note = $(this).parent().parent();
 
-      success: function (result) {
-        alert(result);
+      $.ajax({
+        type: "post",
+        async: true,
+        url: "/notebooks/delete_nb",
+        data: data,
 
-        // 如果被删除的是第一行元素，需要修改之后一个元素css(nb2 -> nb1)
-        var first_4 = [];
-        var first_4_index = 0;
+        success: function (result) {
+          alert(result);
 
-        var is_this_nb_in_first_4 = false;
-        var delete_nb_id = this_note.find('.nb_id').html();
-        $('.nb1').each(function () {
-          var temp_nb_id = $(this).find('.nb_id').html();
-          first_4[first_4_index] = temp_nb_id;
-          first_4_index++;
+          // 如果被删除的是第一行元素，需要修改之后一个元素css(nb2 -> nb1)
+          var first_4 = [];
+          var first_4_index = 0;
 
-          if (temp_nb_id === delete_nb_id) {
-            is_this_nb_in_first_4 = true;
+          var is_this_nb_in_first_4 = false;
+          var delete_nb_id = this_note.find('.nb_id').html();
+          $('.nb1').each(function () {
+            var temp_nb_id = $(this).find('.nb_id').html();
+            first_4[first_4_index] = temp_nb_id;
+            first_4_index++;
+
+            if (temp_nb_id === delete_nb_id) {
+              is_this_nb_in_first_4 = true;
+            }
+          });
+          // alert(first_4);
+          // alert(is_this_nb_in_first_4);
+
+          if (is_this_nb_in_first_4) {
+            var nb_no_5 = $('.nb2').first();
+            nb_no_5.removeClass("nb2");
+            nb_no_5.addClass("nb1");
           }
-        });
-        // alert(first_4);
-        // alert(is_this_nb_in_first_4);
 
-        if (is_this_nb_in_first_4) {
-          var nb_no_5 = $('.nb2').first();
-          nb_no_5.removeClass("nb2");
-          nb_no_5.addClass("nb1");
+          // 动态修改当前样式
+          this_note.empty();
+
+        },
+        error: function (result) {
+          alert("错误" + result);
         }
-
-        // 动态修改当前样式
-        this_note.empty();
-
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
+      });
     });
-  });
+
+    /**
+     * 点击一本笔记本图片，跳转查看该笔记本中的所有笔记
+     */
+    $('.nb_icon_area').click(function () {
+      var this_nb_id = $(this).parent().find('.nb_id').html();
+      window.location.href = "/notes?nb_id=" + this_nb_id;
+    });
+
+    /**
+     * 点击一本笔记本名称，跳转查看该笔记本中的所有笔记
+     */
+    $('.nb_name').click(function () {
+      var this_nb_id = $(this).parent().find('.nb_id').html();
+      window.location.href = "/notes?nb_id=" + this_nb_id;
+    });
+  }
+
 
   /**
-   * 点击一本笔记本图片，跳转查看该笔记本中的所有笔记
+   * 在当前的笔记本中选取，进行模糊搜索
    */
-  $('.nb_icon_area').click(function () {
-    var this_nb_id = $(this).parent().find('.nb_id').html();
-    window.location.href = "/notes?nb_id=" + this_nb_id;
-  });
+  $('#search').bind('keypress', function (event) {
+    if (event.keyCode === 13) {
+      var wanted = $('#search').val();
 
-  /**
-   * 点击一本笔记本名称，跳转查看该笔记本中的所有笔记
-   */
-  $('.nb_name').click(function () {
-    var this_nb_id = $(this).parent().find('.nb_id').html();
-    window.location.href = "/notes?nb_id=" + this_nb_id;
-  });
+      var check = eval('/^\\S*' + wanted + '\\S*$/');
+      var search_result = [];
+      var search_result_index = 0;
 
+      $('.nb_area').each(function () {
+        var nb_name = $(this).find('.nb_name').html();
+        var nb_description = $(this).find('.nb_description').html().trim().substring(3);
+
+        if (check.test(nb_name) || check.test(nb_description)) {
+          search_result[search_result_index] = $(this).find('.nb_content').html();
+          search_result_index++;
+        }
+      });
+
+      // 根据结果重新生成界面代码
+      var html = '';
+      for (var i = 0; i < search_result.length; i++) {
+        html += '<div class="nb_area layui-col-xs3">';
+        if (i < 4) {
+          html += '<div class="nb1 nb_content">';
+        } else {
+          html += '<div class="nb2 nb_content">';
+        }
+        html += search_result[i];
+        html += '</div></div>';
+      }
+      $('.all_nbs').html(html);
+
+      // 重新渲染监听
+      all_nbs_listeners();
+    }
+  });
 
 </script>
 </body>

@@ -22,53 +22,67 @@
     <!-- 笔记的左边导航部分 -->
     <div class="layui-side layui-bg-black" style="margin-left: 7px;margin-top: 15px; margin-bottom: 7px; top: 53px;">
         <div class="layui-side-scroll">
-            <% if(has_note === true) { %>
-            <% for (var i = 0; i < note_data.length; i++) { %>
-            <% if (i != 0) { %>
-            <div style="height: 5px;"></div>
-            <% } %>
-            <% var now_note = note_data[i]; %>
-
-            <% if (i == 0) { %>
-            <div class="brief_note note_selected" style="border: 3px solid #159587">
-                <% } else { %>
-                <div class="brief_note">
-                    <% } %>
-                    <div style="height: 25px">
-                        <p class="note_id" style="display: none"><%= now_note.note_id %></p>
-                        <p class="note_tag" style="display: none"><%= now_note.tag %></p>
-                        <div class="layui-col-xs8">
-                            <div class="brief_note_title">
-                                <%= now_note.note_name %>
-                            </div>
-                            <div class="brief_note_time"><%= now_note.update_time %></div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
-                            <% if (now_note.is_public == 0) { %>
-                            <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
-                                <i class="layui-icon">&#xe641;</i>
-                                <p class="btn_group_tip">去分享</p>
-                            </button>
-                            <% } else { %>
-                            <button class="share_note layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe641;</i>
-                                <p class="btn_group_tip">已分享</p>
-                            </button>
-                            <% } %>
-                            <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
-                                <i class="layui-icon">&#xe640;</i>
-                                <p class="btn_group_tip">删除</p>
-                            </button>
-                        </div>
-                    </div>
-                    <hr class="layui-bg-green brief_separator">
-                    <div class="brief_note_content">
-                        <%- now_note.content %>
-                    </div>
+            <!-- 笔记搜索 -->
+            <div class="layui-col-xs12" style="margin-top: 8px">
+                <label class="layui-col-xs1 note_title_icon">
+                    <i class="layui-icon">&#xe615;</i>
+                </label>
+                <div class=" layui-col-xs10 note_title_outer" style="margin-top: -4px;">
+                    <input id="search" type="text" maxlength="15" class=" new_nb_item_word"
+                           placeholder="搜索笔记名称／内容" style="font-size: 18px">
                 </div>
+            </div>
+            <hr class="layui-bg-gray" style="margin: 3px">
+
+            <div class="all_notes">
+                <% if(has_note === true) { %>
+                <% for (var i = 0; i < note_data.length; i++) { %>
+                <% if (i != 0) { %>
+                <div style="height: 5px;"></div>
                 <% } %>
-                <% } %>
+                <% var now_note = note_data[i]; %>
+
+                <% if (i == 0) { %>
+                <div class="brief_note note_selected" style="border: 3px solid #159587">
+                    <% } else { %>
+                    <div class="brief_note">
+                        <% } %>
+                        <div style="height: 25px">
+                            <p class="note_id" style="display: none"><%= now_note.note_id %></p>
+                            <p class="note_tag" style="display: none"><%= now_note.tag %></p>
+                            <div class="layui-col-xs8">
+                                <div class="brief_note_title">
+                                    <%= now_note.note_name %>
+                                </div>
+                                <div class="brief_note_time"><%= now_note.update_time %></div>
+                            </div>
+                            <!-- 分享、删除按钮 -->
+                            <div class="brief_share_delete_btn_group layui-btn-group layui-col-xs4">
+                                <% if (now_note.is_public == 0) { %>
+                                <button class="share_note layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
+                                    <i class="layui-icon">&#xe641;</i>
+                                    <p class="btn_group_tip">去分享</p>
+                                </button>
+                                <% } else { %>
+                                <button class="share_note layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe641;</i>
+                                    <p class="btn_group_tip">已分享</p>
+                                </button>
+                                <% } %>
+                                <button class="delete_note layui-btn layui-btn-sm layui-btn-danger">
+                                    <i class="layui-icon">&#xe640;</i>
+                                    <p class="btn_group_tip">删除</p>
+                                </button>
+                            </div>
+                        </div>
+                        <hr class="layui-bg-green brief_separator">
+                        <div class="brief_note_content">
+                            <%- now_note.content %>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% } %>
+                </div>
             </div>
         </div>
 
@@ -96,123 +110,169 @@
 <script src="/javascripts/header_interaction.js"></script>
 
 <script>
+  $(document).ready(note_listeners);
+
   layui.use('element', function () {
     var element = layui.element;
   });
 
-  // 笔记单击之后变亮
-  $('.brief_note').click(function () {
-    $('.brief_note').each(function () {
-      $(this).css("border", "3px solid #BDC0BA");
-      $(this).removeClass("note_selected");
-    })
-    $(this).css("border", "3px solid #159587");
-    $(this).addClass("note_selected");
-    var selected_note = $(this);
+  function note_listeners() {
+    // 笔记单击之后变亮
+    $('.brief_note').click(function () {
+      $('.brief_note').each(function () {
+        $(this).css("border", "3px solid #BDC0BA");
+        $(this).removeClass("note_selected");
+      })
+      $(this).css("border", "3px solid #159587");
+      $(this).addClass("note_selected");
+      var selected_note = $(this);
 
-    // 根据选取的笔记读取内容，呈现在右边
-    var cur_note_id = selected_note.find('.note_id').html();
-    alert(cur_note_id);
+      // 根据选取的笔记读取内容，呈现在右边
+      var cur_note_id = selected_note.find('.note_id').html();
+      alert(cur_note_id);
 
-    $.ajax({
-      type: "get",
-      async: true,
-      url: "/notes/" + cur_note_id,
+      $.ajax({
+        type: "get",
+        async: true,
+        url: "/notes/" + cur_note_id,
 
-      success: function (result) {
-        // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
-        $('.note_area').find('.note_id').html(cur_note_id);
-        $('.note_area').find('#note_name_input').val(result[0].note_name);
-        $('.note_area').find('#note_nb').html(result[0].nb_name);
-        $('.note_area').find('#note_tag_input').val(result[0].tag);
-        $('.note_area').find('.mynote').html(result[0].content);
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
-    });
-  });
-
-  // 左侧单条笔记分享
-  $('.share_note').click(function (e) {
-
-    var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
-    var data = {
-      note_id: $(this).parent().parent().find(".note_id").html(),
-      now_public: now_public
-    };
-
-    var holding_btn = $(this);
-    var holding_btn_text = $(this).children("p.btn_group_tip");
-
-    $.ajax({
-      type: "post",
-      async: true,
-      url: "/notes/share_note",
-      data: data,
-
-      success: function (result) {
-        // 动态修改当前样式
-        if (now_public === 1) {
-          holding_btn.removeClass('layui-btn-warm');
-          holding_btn.css("color", "white");
-          holding_btn_text.html("已分享");
-        } else {
-          holding_btn.addClass('layui-btn-warm');
-          holding_btn.css("color", "red");
-          holding_btn_text.html("去分享");
+        success: function (result) {
+          // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
+          $('.note_area').find('.note_id').html(cur_note_id);
+          $('.note_area').find('#note_name_input').val(result[0].note_name);
+          $('.note_area').find('#note_nb').html(result[0].nb_name);
+          $('.note_area').find('#note_tag_input').val(result[0].tag);
+          $('.note_area').find('.mynote').html(result[0].content);
+        },
+        error: function (result) {
+          alert("错误" + result);
         }
-
-        // 动态修改当前笔记的修改时间
-        var brief_note_time = holding_btn.parent().parent().find('.brief_note_time');
-        brief_note_time.html(result);
-
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
+      });
     });
-  });
 
-  // 左侧单条笔记删除
-  $('.delete_note').click(function (e) {
-    var data = {
-      note_id: $(this).parent().parent().find(".note_id").html()
-    };
+    // 左侧单条笔记分享
+    $('.share_note').click(function (e) {
 
-    var this_note = $(this).parent().parent().parent();
+      var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
+      var data = {
+        note_id: $(this).parent().parent().find(".note_id").html(),
+        now_public: now_public
+      };
 
-    $.ajax({
-      type: "post",
-      async: true,
-      url: "/notes/delete_note",
-      data: data,
+      var holding_btn = $(this);
+      var holding_btn_text = $(this).children("p.btn_group_tip");
 
-      success: function (result) {
-        // 得到第一个元素，比较两 note_id
-        var first_note = $('.brief_note').first();
-        var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
-        alert("比对结果：" + is_first);
+      $.ajax({
+        type: "post",
+        async: true,
+        url: "/notes/share_note",
+        data: data,
 
-        // 直接移除当前条目笔记的html
-        this_note.empty();
-        this_note.css("padding", "0px");
-        this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
-        this_note.css("height", "0%");
+        success: function (result) {
+          // 动态修改当前样式
+          if (now_public === 1) {
+            holding_btn.removeClass('layui-btn-warm');
+            holding_btn.css("color", "white");
+            holding_btn_text.html("已分享");
+          } else {
+            holding_btn.addClass('layui-btn-warm');
+            holding_btn.css("color", "red");
+            holding_btn_text.html("去分享");
+          }
 
+          // 动态修改当前笔记的修改时间
+          var brief_note_time = holding_btn.parent().parent().find('.brief_note_time');
+          brief_note_time.html(result);
 
-        if (is_first) {
-          // 是第一条笔记，删除后续的间隔html
-          this_note.next().css("height", "0px");
-        } else {
-          // 不是第一条笔记，删除前序的间隔html
-          this_note.prev().css("height", "0px");
+        },
+        error: function (result) {
+          alert("错误" + result);
         }
-      },
-      error: function (result) {
-        alert("错误" + result);
-      }
+      });
     });
+
+    // 左侧单条笔记删除
+    $('.delete_note').click(function (e) {
+      var data = {
+        note_id: $(this).parent().parent().find(".note_id").html()
+      };
+
+      var this_note = $(this).parent().parent().parent();
+
+      $.ajax({
+        type: "post",
+        async: true,
+        url: "/notes/delete_note",
+        data: data,
+
+        success: function (result) {
+          // 得到第一个元素，比较两 note_id
+          var first_note = $('.brief_note').first();
+          var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
+          alert("比对结果：" + is_first);
+
+          // 直接移除当前条目笔记的html
+          this_note.empty();
+          this_note.css("padding", "0px");
+          this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
+          this_note.css("height", "0%");
+
+
+          if (is_first) {
+            // 是第一条笔记，删除后续的间隔html
+            this_note.next().css("height", "0px");
+          } else {
+            // 不是第一条笔记，删除前序的间隔html
+            this_note.prev().css("height", "0px");
+          }
+        },
+        error: function (result) {
+          alert("错误" + result);
+        }
+      });
+    });
+  }
+
+  /**
+   * 在当前的笔记中选取，进行模糊搜索
+   */
+  $('#search').bind('keypress', function (event) {
+    if (event.keyCode === 13) {
+      var wanted = $('#search').val();
+
+      var check = eval('/^\\S*' + wanted + '\\S*$/');
+      var search_result = [];
+      var search_result_index = 0;
+
+      $('.brief_note').each(function () {
+        var note_name = $(this).find('.brief_note_title').html().trim();
+        var note_content = $(this).find('.brief_note_content').html().trim();
+
+        alert(note_name + "\n" + note_content);
+        alert(check.test(note_name) + "\n" + check.test(note_content))
+        if (check.test(note_name) || check.test(note_content)) {
+          search_result[search_result_index] = $(this).html();
+          search_result_index++;
+        }
+      });
+      alert(search_result.length);
+
+      // 根据结果重新生成界面代码
+      var html = '';
+      for (var i = 0; i < search_result.length; i++) {
+        if (i !== 0) {
+          html += '<div style="height: 5px;"></div><div class="brief_note">';
+        } else {
+          html += '<div class="brief_note note_selected" style="border: 3px solid #159587">';
+        }
+        html += search_result[i];
+        html += '</div></div>';
+      }
+      $('.all_notes').html(html);
+
+      // 重新渲染监听
+      note_listeners();
+    }
   });
 
 </script>
