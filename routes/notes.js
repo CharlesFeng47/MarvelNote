@@ -40,11 +40,11 @@ router.get('/', function (request, response, next) {
                 response.render('error');
               } else {
                 console.log(JSON.stringify(res));
-                response.render('notes', {has_note: false, default_nb: res});
+                response.render('notes', {has_note: false, default_nb: res, cur_user: request.session.cur_user});
               }
             });
           } else {
-            response.render('notes', {has_note: true, note_data: wanted_notes});
+            response.render('notes', {has_note: true, note_data: wanted_notes, cur_user: request.session.cur_user});
           }
         }
       });

@@ -17,7 +17,7 @@ router.get('/', function (request, response, next) {
           response.render('error');
         } else {
           console.log(JSON.stringify(res));
-          response.render('admin_index', {user_data: res});
+          response.render('admin_index', {user_data: res, cur_user: request.session.cur_user});
         }
       });
     } else {
