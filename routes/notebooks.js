@@ -73,15 +73,23 @@ router.post('/add_nb', function (request, response, next) {
 router.post('/delete_nb', function (request, response, next) {
 
   var request_body = request.body;
-  var sql = "delete from notebook where nb_id = '" + request_body.nb_id + "'";
+  var sql1 = "delete from notebook where nb_id = '" + request_body.nb_id + "'";
+  var sql2 = "delete from note where nb_id = '" + request_body.nb_id + "'";
 
-  db.all(sql, function (err, res) {
+  db.all(sql1, function (err, res) {
     if (err) {
       console.log(err);
       response.render('error')
     } else {
-      console.log(JSON.stringify(res));
-      response.send('delete success');
+      db.all(sql2, function (err, res) {
+        if (err) {
+          console.log(err);
+          response.render('error')
+        } else {
+          console.log(JSON.stringify(res));
+          response.send('delete success');
+        }
+      });
     }
   });
 });
