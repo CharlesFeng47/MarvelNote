@@ -16,12 +16,15 @@ router.get('/', function (request, response, next) {
       console.log(typeof request.query.nb_id === 'undefined');
 
       var sql;
-      if (typeof request.query.nb_id === 'undefined') {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id " +
-          "and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
-      } else {
+      if (typeof request.query.nb_id !== 'undefined') {
         sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '"
-          + request.query.nb_id + "'and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
+          + request.query.nb_id + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
+      } else if (typeof request.query.tag !== 'undefined') {
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.tag = '"
+          + request.query.tag + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
+      } else {
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id " +
+          " and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
       }
 
       console.log(sql);

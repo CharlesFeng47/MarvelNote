@@ -36,7 +36,7 @@
             <hr class="layui-bg-gray table_item_separator">
             <% } %>
             <div class="layui-col-xs12 table_line">
-                <div class="user_id layui-col-xs6 table_item"><%= tag_data[i] %></div>
+                <div class="tag_id layui-col-xs6 table_item"><%= tag_data[i] %></div>
 
                 <!-- 查看、删除按钮 -->
                 <div class="layui-col-xs6">
@@ -45,10 +45,10 @@
                     </div>
                     <div class="layui-btn-group layui-col-xs4 table_item_op_btn">
                         <div class="layui-col-xs12" style="text-align: center">
-                            <button class="user_edit layui-btn layui-btn-sm">
+                            <button class="tag_check layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe857;</i>
                             </button>
-                            <button class="user_delete layui-btn layui-btn-sm layui-btn-danger">
+                            <button class="tag_delete layui-btn layui-btn-sm layui-btn-danger">
                                 <i class="layui-icon">&#xe640;</i>
                             </button>
                         </div>
@@ -77,6 +77,54 @@
     var element = layui.element;
   });
 
+
+  /**
+   * 标签查看
+   */
+  $('.tag_check').click(function () {
+    var this_tag_id = $(this).parent().parent().parent().parent().find('.tag_id').html();
+    window.location.href = "/notes?tag=" + this_tag_id;
+  });
+
+  /**
+   * 标签删除
+   */
+  $('.tag_delete').click(function () {
+    var this_tag = $(this).parent().parent().parent().parent();
+    var data = {
+      tag_id: this_tag.find('.tag_id').html()
+    };
+
+    $.ajax({
+      type: "post",
+      async: true,
+      url: "/tags/delete",
+      data: data,
+
+      success: function (result) {
+        alert(result);
+
+        // 动态修改用户界面
+        // 得到第一个元素，比较两 note_id
+        var first_tag = $('.table_line').first();
+        var is_first = first_tag.find('.tag_id').html() === this_tag.find('.tag_id').html();
+
+        // 直接移除当前条目笔记的html
+        this_tag.empty();
+        this_tag.removeClass("table_line");
+        if (is_first) {
+          // 是第一个用户，删除后续的间隔html
+          this_tag.next().css("display", "none");
+        } else {
+          // 不是第一个用户，删除前序的间隔html
+          this_tag.prev().css("display", "none");
+        }
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
+  });
 
 </script>
 </body>

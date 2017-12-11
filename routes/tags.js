@@ -44,4 +44,24 @@ router.get('/', function (request, response, next) {
   }
 });
 
+/**
+ * 删除一个标签
+ */
+router.post('/delete', function (request, response, next) {
+
+  var request_body = request.body;
+  var sql = "delete from note where tag = '" + request_body.tag_id + "'";
+
+  db.all(sql, function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error')
+    } else {
+      console.log(JSON.stringify(res));
+      response.send('delete success');
+    }
+  });
+});
+
+
 module.exports = router;
