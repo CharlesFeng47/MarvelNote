@@ -49,7 +49,31 @@ router.get('/', function (request, response, next) {
                 user_data_index++;
               }
 
-              response.render('community', {user_data: user_data, cur_user: request.session.cur_user});
+              var all_public_notes_sql = "select note.*, user_id from note, notebook, relationship where following = '"
+                + request.session.cur_user + "' " + "and be_followed = notebook.user_id and notebook.nb_id = note.nb_id "
+                + "order by update_time desc";
+              db.all(all_public_notes_sql, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  response.render('error')
+                } else {
+                  console.log(JSON.stringify(res));
+                  if (res.length !== 0) {
+                    response.render('community', {
+                      user_data: user_data,
+                      has_share_note: true,
+                      share_notes_data: res,
+                      cur_user: request.session.cur_user
+                    });
+                  } else{
+                    response.render('community', {
+                      user_data: user_data,
+                      has_share_note: false,
+                      cur_user: request.session.cur_user
+                    });
+                  }
+                }
+              });
             }
           });
         }

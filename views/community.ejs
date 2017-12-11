@@ -75,6 +75,13 @@
     <!-- 笔记内容主体部分 -->
     <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
 
+        <% if(has_share_note === true) { %>
+        <% for (var i = 0; i < share_notes_data.length; i++) { %>
+        <% if (i != 0) { %>
+        <div style="height: 5px;"></div>
+        <% } %>
+        <% var now_note = share_notes_data[i]; %>
+
         <div class="share_note_line">
             <div class="share_note_content">
                 <!--  笔记名字 -->
@@ -83,7 +90,7 @@
                         <i class="layui-icon">&#xe617;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
+                        <div class="note_item_word" style="width: 270px"><%= now_note.note_name %></div>
                     </div>
                 </div>
 
@@ -93,7 +100,7 @@
                         <i class="layui-icon">&#xe64c;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
+                        <div class="note_item_word" style="width: 270px"><%= now_note.tag %></div>
                     </div>
                 </div>
 
@@ -103,19 +110,19 @@
                         <i class="layui-icon">&#xe612;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
+                        <div class="note_item_word" style="width: 270px"><%= now_note.user_id %></div>
                     </div>
                 </div>
 
                 <!-- 查看详情、点赞按钮 -->
                 <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
+                    <button class="check_btn layui-btn layui-btn-sm">
                         <i class="layui-icon">&#xe857;</i>
                         <p class="btn_group_tip">查看详情</p>
                     </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
+                    <button class="upvoke_btn layui-btn layui-btn-sm">
                         <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
+                        <p class="btn_group_tip"><%= now_note.upvote %></p>
                     </button>
                 </div>
 
@@ -124,291 +131,13 @@
 
                 <div class="layui-col-xs12">
                     <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
+                        <%= now_note.content %>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div style="height: 5px;"></div>
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
-                    </div>
-                </div>
-
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
-                    </div>
-                </div>
-
-                <!-- 查看详情按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
-                    </button>
-                </div>
-
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
-
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="height: 5px;"></div>
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
-                    </div>
-                </div>
-
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
-                    </div>
-                </div>
-
-                <!-- 查看详情按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
-                    </button>
-                </div>
-
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
-
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="height: 5px;"></div>
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
-                    </div>
-                </div>
-
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
-                    </div>
-                </div>
-
-                <!-- 查看详情按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
-                    </button>
-                </div>
-
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
-
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="height: 5px;"></div>
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
-                    </div>
-                </div>
-
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
-                    </div>
-                </div>
-
-                <!-- 查看详情按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
-                    </button>
-                </div>
-
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
-
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="height: 5px;"></div>
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">笔记名称十五字笔记名称十五笔记</div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">标签123</div>
-                    </div>
-                </div>
-
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px">charles</div>
-                    </div>
-                </div>
-
-                <!-- 查看详情按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="follow_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">21</p>
-                    </button>
-                </div>
-
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
-
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字最多十五字
-                    </div>
-                </div>
-            </div>
-        </div>
+        <% } %>
+        <% } %>
     </div>
 </div>
 
