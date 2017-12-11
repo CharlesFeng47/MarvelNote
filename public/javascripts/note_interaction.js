@@ -83,6 +83,30 @@ $('.discard_now_note').click(function () {
 });
 
 /**
+ * 下载当前文档中的内容
+ */
+$('.download_now_note').click(function () {
+
+  // var doc_html = $('.mynote').html();
+
+  html2canvas(document.body, {
+    onrendered:function(canvas) {
+
+      //返回图片dataURL，参数：图片格式和清晰度(0-1)
+      var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+      //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
+      var pdf = new jsPDF('', 'pt', 'a4');
+
+      //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
+      pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
+
+      pdf.save('笔记kk.pdf');
+    }
+  });
+});
+
+/**
  * 更换笔记所在的笔记本
  */
 $('#change_nb').click(function () {
