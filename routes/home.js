@@ -5,17 +5,18 @@ var sqlite = require('sqlite3');
 var db = new sqlite.Database('./MarvelNote.sqlite');
 
 /**
- * 新建一条笔记
+ * 登录注册主界面
  */
 router.get('/', function(request, response, next) {
+  console.log("GET HOME");
 
-  db.all("select * from notebook limit 1", function (err, res) {
+  db.all("select * from notebook", function (err, res) {
     if (err) {
       console.log(err);
       response.render('error');
     } else {
       console.log(JSON.stringify(res));
-      response.render('index', {has_note: false, default_nb: res});
+      response.render('home', {nb_data: res});
     }
   });
 

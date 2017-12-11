@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 
+var home = require('./routes/home');
 var index = require('./routes/index');
 var notes = require('./routes/notes');
 var notebooks = require('./routes/notebooks');
@@ -29,7 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
 
 
-app.use('/', index);
+app.use('/', home);
+app.use('/index', index);
 app.use('/notes', notes);
 app.use('/notebooks', notebooks);
 app.use('/users', users);
