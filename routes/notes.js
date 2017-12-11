@@ -64,18 +64,18 @@ router.get('/', function (request, response, next) {
  * 保存／新建笔记
  */
 router.post('/save_note', function (request, response, next) {
-
+  var update_time = get_cur_datetime();
   var request_body = request.body;
   var sql;
   if (request_body.note_id === "-1") {
     // 这是一条新建的笔记
     sql = "insert into note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
       request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.content +
-      "', '0', '" + datetime + "', '" + request_body.note_tag + "')";
+      "', '0', '" + update_time + "', '" + request_body.note_tag + "')";
   } else {
     // 此条笔记是在原来的基础上修改
     sql = "update note set note_name = '" + request_body.note_name + "', tag = '" + request_body.note_tag +
-      "', content = '" + request_body.content + "', update_time = '" + get_cur_datetime() + "', nb_id = '" + request_body.nb_id +
+      "', content = '" + request_body.content + "', update_time = '" + update_time + "', nb_id = '" + request_body.nb_id +
       "' where note_id = '" + request_body.note_id + "'";
   }
   console.log(sql);
@@ -87,7 +87,7 @@ router.post('/save_note', function (request, response, next) {
     } else {
       var callback_data = {
         note_name: request_body.note_name,
-        update_time: datetime,
+        update_time: update_time,
         content: request_body.content
       };
       response.send(callback_data);
