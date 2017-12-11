@@ -42,6 +42,9 @@
 .user_id {
     font-size: 16px;
     color: #BDC0BA;
+    height: 40px;
+    vertical-align: middle;
+    display: table-cell;
 }
 
 .share_note_line {
@@ -65,4 +68,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word
+}
+
+.follow_btn {
+    text-align: center;
+    width: 70px;
+    vertical-align: middle;
+    display: table-cell;
 }

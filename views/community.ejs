@@ -35,108 +35,39 @@
             <hr class="layui-bg-gray" style="margin: 3px">
 
             <div class="all_users">
+                <% for (var i = 0; i < user_data.length; i++) { %>
+                <% if (i != 0) { %>
+                <div style="height: 5px;"></div>
+                <% } %>
+                <% var now_user = user_data[i]; %>
+
                 <div class="user_line">
                     <div class="user_content">
-                        <div class="layui-col-xs8">
+                        <div class="layui-col-xs-offset1 layui-col-xs6">
                             <div class="user_id">
-                                最多十五字最多十五字最多十五字
+                                <%= now_user.user_id %>
                             </div>
                         </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
+                        <!-- 关注按钮 -->
+                        <% if (now_user.is_following) { %>
+                        <div class="btn_container layui-btn-group layui-col-xs-offset1 layui-col-xs4">
                             <button class="follow_btn layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe613;</i>
                                 <p class="btn_group_tip">取消关注</p>
                             </button>
                         </div>
+                        <% }else { %>
+                        <div class="btn_container layui-btn-group layui-col-xs-offset1 layui-col-xs4">
+                            <button class="follow_btn layui-btn layui-btn-sm layui-btn-warm" style="color: red;">
+                                <i class="layui-icon">&#xe613;</i>
+                                <p class="btn_group_tip">关注</p>
+                            </button>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
 
-                <div style="height: 5px;"></div>
-                <div class="user_line">
-                    <div class="user_content">
-                        <div class="layui-col-xs8">
-                            <div class="user_id">
-                                最多十五字最多十五字最多十五字
-                            </div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
-                            <button class="follow_btn layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe612;</i>
-                                <p class="btn_group_tip">取消关注</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 5px;"></div>
-                <div class="user_line">
-                    <div class="user_content">
-                        <div class="layui-col-xs8">
-                            <div class="user_id">
-                                最多十五字最多十五字最多十五字
-                            </div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
-                            <button class="follow_btn layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe612;</i>
-                                <p class="btn_group_tip">取消关注</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 5px;"></div>
-                <div class="user_line">
-                    <div class="user_content">
-                        <div class="layui-col-xs8">
-                            <div class="user_id">
-                                最多十五字最多十五字最多十五字
-                            </div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
-                            <button class="follow_btn layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe612;</i>
-                                <p class="btn_group_tip">取消关注</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 5px;"></div>
-                <div class="user_line">
-                    <div class="user_content">
-                        <div class="layui-col-xs8">
-                            <div class="user_id">
-                                最多十五字最多十五字最多十五字
-                            </div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
-                            <button class="follow_btn layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe612;</i>
-                                <p class="btn_group_tip">取消关注</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 5px;"></div>
-                <div class="user_line">
-                    <div class="user_content">
-                        <div class="layui-col-xs8">
-                            <div class="user_id">
-                                最多十五字最多十五字最多十五字
-                            </div>
-                        </div>
-                        <!-- 分享、删除按钮 -->
-                        <div class="btn_container layui-btn-group layui-col-xs4">
-                            <button class="follow_btn layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe612;</i>
-                                <p class="btn_group_tip">取消关注</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
             </div>
         </div>
     </div>
@@ -495,13 +426,87 @@
 <script src="/javascripts/header_interaction.js"></script>
 
 <script>
+  $(document).ready(user_listeners());
+
 
   layui.use('element', function () {
     var element = layui.element;
   });
 
+  function user_listeners() {
+    // 笔记单击之后变亮
+    $('.user_line').click(function () {
+      $('.user_line').each(function () {
+        $(this).css("border", "3px solid #BDC0BA");
+        $(this).removeClass("user_selected");
+      })
+      $(this).css("border", "3px solid #159587");
+      $(this).addClass("user_selected");
+      var selected_note = $(this);
+
+      // 根据选取的笔记读取内容，呈现在右边
+      // var cur_note_id = selected_note.find('.note_id').html();
+      // alert(cur_note_id);
+      //
+      // $.ajax({
+      //   type: "get",
+      //   async: true,
+      //   url: "/notes/" + cur_note_id,
+      //
+      //   success: function (result) {
+      //     // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
+      //     $('.note_area').find('.note_id').html(cur_note_id);
+      //     $('.note_area').find('#note_name_input').val(result[0].note_name);
+      //     $('.note_area').find('#note_nb').html(result[0].nb_name);
+      //     $('.note_area').find('#note_tag_input').val(result[0].tag);
+      //     $('.note_area').find('.mynote').html(result[0].content);
+      //   },
+      //   error: function (result) {
+      //     alert("错误" + result);
+      //   }
+      // });
+    });
+
+    // 左侧点击关注／取消关注
+    $('.follow_btn').click(function (e) {
+
+      // 点击之后的状态
+      var now_following = $(this).find(".btn_group_tip").html() === '关注';
+      var data = {
+        to_follow: $(this).parent().parent().find(".user_id").html().trim(),
+        now_following: now_following
+      };
+
+      var holding_btn = $(this);
+      var holding_btn_text = $(this).children("p.btn_group_tip");
+
+      $.ajax({
+        type: "post",
+        async: true,
+        url: "/community/follow",
+        data: data,
+
+        success: function (result) {
+          // 动态修改当前样式
+          if (now_following === true) {
+            holding_btn.removeClass('layui-btn-warm');
+            holding_btn.css("color", "white");
+            holding_btn_text.html("取消关注");
+          } else {
+            holding_btn.addClass('layui-btn-warm');
+            holding_btn.css("color", "red");
+            holding_btn_text.html("关注");
+          }
+        },
+        error: function (result) {
+          alert("错误" + result);
+        }
+      });
+    });
+  }
+
   /**
-   * 在当前的笔记中选取，进行模糊搜索
+   * TODO 用户模糊搜索【访问数据库】
    */
   $('#search').bind('keypress', function (event) {
     if (event.keyCode === 13) {
@@ -536,9 +541,6 @@
         html += '</div></div>';
       }
       $('.all_notes').html(html);
-
-      // 重新渲染监听
-      // note_listeners();
     }
   });
 

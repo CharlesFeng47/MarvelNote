@@ -5,7 +5,7 @@ var sqlite = require('sqlite3');
 var db = new sqlite.Database('./MarvelNote.sqlite');
 
 /**
- * 访问笔记界面的主界面
+ * 访问朋友圈界面的主界面
  */
 router.get('/', function (request, response, next) {
 
@@ -13,43 +13,45 @@ router.get('/', function (request, response, next) {
     console.log("--------- LOG IN: " + request.session.cur_user);
     if (request.session.cur_user_type === 0) {
       console.log(request.query);
-      console.log(typeof request.query.nb_id === 'undefined');
 
-      var sql;
-      if (typeof request.query.nb_id !== 'undefined') {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '"
-          + request.query.nb_id + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
-      } else if (typeof request.query.tag !== 'undefined') {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.tag = '"
-          + request.query.tag + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
-      } else {
-        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id " +
-          " and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
-      }
-
-      console.log(sql);
-      db.all(sql, function (err, res) {
+      // 所有普通用户
+      db.all("select * from user where is_admin = 0 and id != '" + request.session.cur_user + "'", function (err, res) {
         if (err) {
           console.log(err);
           response.render('error');
         } else {
-          var wanted_notes = res;
-          console.log(JSON.stringify(wanted_notes));
+          var all_users = res;
+          console.log(JSON.stringify(all_users));
 
-          if (wanted_notes.length === 0) {
-            // 用户没有笔记本，呈现默认的笔记本、
-            db.all("select * from notebook limit 1", function (err, res) {
-              if (err) {
-                console.log(err);
-                response.render('error');
-              } else {
-                console.log(JSON.stringify(res));
-                response.render('community', {has_note: false, default_nb: res, cur_user: request.session.cur_user});
+          // 当前用户关注的用户
+          db.all("select * from relationship where following = '" + request.session.cur_user + "'", function (err, res) {
+            if (err) {
+              console.log(err);
+              response.render('error')
+            } else {
+              console.log(JSON.stringify(res));
+
+              var user_data = [];
+              var user_data_index = 0;
+              // 对所有用户在关于当前用户是否关注方面进行区分
+              for (var i = 0; i < all_users.length; i++) {
+                var is_following = false;
+                for (var j = 0; j < res.length; j++) {
+                  if (all_users[i].id === res[j].be_followed) {
+                    is_following = true;
+                  }
+                }
+
+                user_data[user_data_index] = {
+                  user_id: all_users[i].id,
+                  is_following: is_following
+                };
+                user_data_index++;
               }
-            });
-          } else {
-            response.render('community', {has_note: true, note_data: wanted_notes, cur_user: request.session.cur_user});
-          }
+
+              response.render('community', {user_data: user_data, cur_user: request.session.cur_user});
+            }
+          });
         }
       });
     } else {
@@ -64,81 +66,30 @@ router.get('/', function (request, response, next) {
 
 
 /**
- * 保存／新建笔记
+ * 关注／取消关注选定的用户
  */
-router.post('/save_note', function (request, response, next) {
-  var update_time = get_cur_datetime();
+router.post('/follow', function (request, response, next) {
+
   var request_body = request.body;
   var sql;
-  if (request_body.note_id === "-1") {
-    // 这是一条新建的笔记
-    sql = "insert into note('note_name', 'nb_id', 'content', 'is_public', 'update_time', 'tag') values('" +
-      request_body.note_name + "', '" + request_body.nb_id + "', '" + request_body.content +
-      "', '0', '" + update_time + "', '" + request_body.note_tag + "')";
+  if (request_body.now_following === 'true') {
+    sql = "insert into relationship('be_followed', 'following') values('" + request_body.to_follow + "', '" + request.session.cur_user + "')";
   } else {
-    // 此条笔记是在原来的基础上修改
-    sql = "update note set note_name = '" + request_body.note_name + "', tag = '" + request_body.note_tag +
-      "', content = '" + request_body.content + "', update_time = '" + update_time + "', nb_id = '" + request_body.nb_id +
-      "' where note_id = '" + request_body.note_id + "'";
+    sql = "delete from relationship where be_followed='" + request_body.to_follow + "' and following='" + request.session.cur_user + "'";
   }
   console.log(sql);
 
   db.all(sql, function (err, res) {
     if (err) {
       console.log(err);
-      response.render('error');
-    } else {
-      var callback_data = {
-        note_name: request_body.note_name,
-        update_time: update_time,
-        content: request_body.content
-      };
-      response.send(callback_data);
-    }
-  });
-});
-
-/**
- * 分享／取消分享指定的笔记
- */
-router.post('/share_note', function (request, response, next) {
-
-  console.log("share begin");
-  var update_time = get_cur_datetime();
-  var request_body = request.body;
-  var sql = "update note set is_public = '" + request_body.now_public + "', update_time = '" + update_time
-    + "' where note_id = '" + request_body.note_id + "'";
-  console.log("share sql: " + sql);
-
-  db.all(sql, function (err, res) {
-    if (err) {
-      console.log(err);
       response.render('error')
     } else {
       console.log(JSON.stringify(res));
-      response.send(update_time);
+      response.send("follow state change success");
     }
   });
 });
 
-/**
- * 删除指定的笔记
- */
-router.post('/delete_note', function (request, response, next) {
-
-  var request_body = request.body;
-  var sql = "delete from note where note_id = '" + request_body.note_id + "'";
-
-  db.all(sql, function (err, res) {
-    if (err) {
-      console.log(err);
-      response.render('error')
-    } else {
-      console.log(JSON.stringify(res));
-      response.send('delete success');
-    }
-  });
-});
 
 /**
  * 访问一个专门的笔记条目
@@ -159,18 +110,5 @@ router.get('/:cur_note_id', function (request, response, next) {
     }
   });
 });
-
-/**
- * 获取当前日前时间，并进行转换后存入数据库
- */
-function get_cur_datetime() {
-  var now_datetime = new Date().toISOString();
-  var date_time_separator = now_datetime.indexOf("T");
-  var date_string = now_datetime.substring(0, date_time_separator);
-  var time_string = now_datetime.substring(date_time_separator + 1, date_time_separator + 9);
-  var datetime = date_string + " " + time_string;
-  console.log("NOW DATETIME: " + datetime);
-  return datetime;
-}
 
 module.exports = router;

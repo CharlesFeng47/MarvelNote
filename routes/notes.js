@@ -13,7 +13,6 @@ router.get('/', function (request, response, next) {
     console.log("--------- LOG IN: " + request.session.cur_user);
     if (request.session.cur_user_type === 0) {
       console.log(request.query);
-      console.log(typeof request.query.nb_id === 'undefined');
 
       var sql;
       if (typeof request.query.nb_id !== 'undefined') {
