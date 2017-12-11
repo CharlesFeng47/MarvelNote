@@ -40,7 +40,7 @@ $('.user_edit').click(function () {
           '    <div class="layui-col-xs12" style="margin-left: 10px;">\n' +
           '        <label class="layui-col-xs3" style="font-size: 18px;color: #BDC0BA">修改密码</label>\n' +
           '        <div class="layui-col-xs7 note_title_outer" style="margin-top: -4px;">\n' +
-          '            <input id="user_new_pwd_1" type="text" maxlength="37" class=" new_nb_item_word" ' +
+          '            <input id="user_new_pwd_1" type="text" maxlength="20" class=" new_nb_item_word" ' +
           'placeholder="修改后的密码（最长20个字）" style="font-size: 18px">\n' +
           '        </div>\n' +
           '    </div>\n' +
@@ -48,7 +48,7 @@ $('.user_edit').click(function () {
           '    <div class="layui-col-xs12" style="margin-left: 10px;">\n' +
           '        <label class="layui-col-xs3" style="font-size: 18px;color: #BDC0BA">确认密码</label>\n' +
           '        <div class=" layui-col-xs7 note_title_outer" style="margin-top: -4px;">\n' +
-          '            <input id="user_new_pwd_2" type="text" maxlength="37" class=" new_nb_item_word" ' +
+          '            <input id="user_new_pwd_2" type="text" maxlength="20" class=" new_nb_item_word" ' +
           'placeholder="修改后的密码（最长20个字）" style="font-size: 18px">\n' +
           '        </div>\n' +
           '    </div>\n' +
@@ -113,8 +113,9 @@ $('.user_edit').click(function () {
  * 删除用户
  */
 $('.user_delete').click(function () {
+  var this_user = $(this).parent().parent().parent().parent();
   var data = {
-    user_id: $(this).parent().parent().parent().parent().find('.user_id').html()
+    user_id: this_user.find('.user_id').html()
   };
 
   $.ajax({
@@ -126,7 +127,22 @@ $('.user_delete').click(function () {
     success: function (result) {
       alert(result);
 
-      // TODO 动态修改用户界面
+      // 动态修改用户界面
+      // 得到第一个元素，比较两 note_id
+      var first_uesr = $('.table_line').first();
+      var is_first = first_uesr.find('.user_id').html() === this_user.find('.user_id').html();
+      alert("比对结果：" + is_first);
+
+      // 直接移除当前条目笔记的html
+      this_user.empty();
+      this_user.removeClass("table_line");
+      if (is_first) {
+        // 是第一个用户，删除后续的间隔html
+        this_user.next().css("display", "none");
+      } else {
+        // 不是第一个用户，删除前序的间隔html
+        this_user.prev().css("display", "none");
+      }
     },
     error: function (result) {
       alert("错误" + result);

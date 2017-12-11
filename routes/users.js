@@ -8,7 +8,7 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  * 用户管理的主界面
  */
 router.get('/', function (request, response, next) {
-  db.all("select * from user", function (err, res) {
+  db.all("select * from user where is_admin = 0", function (err, res) {
     if (err) {
       console.log(err);
       response.render('error');
