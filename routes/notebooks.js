@@ -8,16 +8,27 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  * 笔记本主页的界面
  */
 router.get('/', function (request, response, next) {
-
-  db.all("select * from notebook", function (err, res) {
-    if (err) {
-      console.log(err);
-      response.render('error');
+  if (request.session.cur_user) {
+    console.log("--------- LOG IN: " + request.session.cur_user);
+    if (request.session.cur_user_type === 0) {
+      db.all("select * from notebook", function (err, res) {
+        if (err) {
+          console.log(err);
+          response.render('error');
+        } else {
+          console.log(JSON.stringify(res));
+          response.render('notebooks', {nb_data: res, cur_user: request.session.cur_user});
+        }
+      });
     } else {
-      console.log(JSON.stringify(res));
-      response.render('notebooks', {nb_data: res});
+      // 管理员没有权限访问普通用户界面
+      response.render("error", {message: "您的账号暂没有访问此页面的权限！"});
     }
-  });
+  } else {
+    console.log("--------- NOT LOG IN");
+    response.render("home");
+  }
+
 });
 
 /**

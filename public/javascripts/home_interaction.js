@@ -25,7 +25,6 @@ $('.sign_up').click(function () {
       alert("错误" + result);
     }
   });
-
 });
 
 /**
@@ -47,14 +46,15 @@ $('.log_in').click(function () {
       if (result === "-1") {
         alert("该用户编号还未被注册，请注册后再登录！");
       } else if (result === "0") {
-        alert("登录成功！");
+        alert("普通用户登录成功！");
       } else if (result === "1") {
         alert("密码错误！")
+      } else if (result === "2") {
+        alert("管理员登录成功！")
       }
     },
     error: function (result) {
       alert("错误" + result);
     }
   });
-
 });

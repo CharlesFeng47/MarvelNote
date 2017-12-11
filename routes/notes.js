@@ -9,42 +9,53 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  */
 router.get('/', function (request, response, next) {
 
-  console.log(request.query);
-  console.log(typeof request.query.nb_id === 'undefined');
+  if (request.session.cur_user) {
+    console.log("--------- LOG IN: " + request.session.cur_user);
+    if (request.session.cur_user_type === 0) {
+      console.log(request.query);
+      console.log(typeof request.query.nb_id === 'undefined');
 
-  var sql;
-  if (typeof request.query.nb_id === 'undefined') {
-    sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc";
-  } else {
-    sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '" + request.query.nb_id
-      + "' order by note.update_time desc";
-  }
-
-  console.log(sql);
-  db.all(sql, function (err, res) {
-    if (err) {
-      console.log(err);
-      response.render('error');
-    } else {
-      var wanted_notes = res;
-      console.log(JSON.stringify(wanted_notes));
-
-      if (wanted_notes.length === 0) {
-        // 用户没有笔记本，呈现默认的笔记本、
-        db.all("select * from notebook limit 1", function (err, res) {
-          if (err) {
-            console.log(err);
-            response.render('error');
-          } else {
-            console.log(JSON.stringify(res));
-            response.render('notes', {has_note: false, default_nb: res});
-          }
-        });
+      var sql;
+      if (typeof request.query.nb_id === 'undefined') {
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id order by note.update_time desc";
       } else {
-        response.render('notes', {has_note: true, note_data: wanted_notes});
+        sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '" + request.query.nb_id
+          + "' order by note.update_time desc";
       }
+
+      console.log(sql);
+      db.all(sql, function (err, res) {
+        if (err) {
+          console.log(err);
+          response.render('error');
+        } else {
+          var wanted_notes = res;
+          console.log(JSON.stringify(wanted_notes));
+
+          if (wanted_notes.length === 0) {
+            // 用户没有笔记本，呈现默认的笔记本、
+            db.all("select * from notebook limit 1", function (err, res) {
+              if (err) {
+                console.log(err);
+                response.render('error');
+              } else {
+                console.log(JSON.stringify(res));
+                response.render('notes', {has_note: false, default_nb: res});
+              }
+            });
+          } else {
+            response.render('notes', {has_note: true, note_data: wanted_notes});
+          }
+        }
+      });
+    } else {
+      // 管理员没有权限访问普通用户界面
+      response.render("error", {message: "您的账号暂没有访问此页面的权限！"});
     }
-  });
+  } else {
+    console.log("--------- NOT LOG IN");
+    response.render("home");
+  }
 });
 
 

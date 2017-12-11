@@ -90,7 +90,7 @@ $('#modify_pwd').click(function () {
 });
 
 /**
- * 退出登录
+ * TODO 退出登录
  */
 $('#exit').click(function () {
   alert("exit");

@@ -67,8 +67,9 @@ router.post('/sign_up', function (request, response, next) {
 /**
  * 登录
  * @return "-1"：未被注册
- *          "0"：已注册且密码正确，登录成功
+ *          "0"：已注册且密码正确，登录成功【普通用户】
  *          "1"：已注册但密码不正确，登录失败
+ *          "2"：已注册且密码正确，登录成功【管理员】
  */
 router.post('/log_in', function (request, response, next) {
 
@@ -90,11 +91,19 @@ router.post('/log_in', function (request, response, next) {
         if (temp_user.id === log_in_id) {
           has_been_signed_up = true;
           if (temp_user.password === log_in_pwd) {
-            response.send("0");
+
+            // 保存登录用户
+            request.session.cur_user = log_in_id;
+            request.session.cur_user_type = temp_user.is_admin;
+
+            if (temp_user.is_admin === 1) {
+              response.send("2");
+            } else {
+              response.send("0");
+            }
           } else {
             response.send("1");
           }
-
         }
       }
 
@@ -103,6 +112,17 @@ router.post('/log_in', function (request, response, next) {
       }
     }
   });
+});
+
+/**
+ * 退出登录
+ * @return "0"：成功退出登录
+ */
+router.post('/log_out', function (request, response, next) {
+  console.log("exit");
+  request.session.cur_user = null;
+  request.session.cur_user_type = null;
+  response.send("0");
 });
 
 

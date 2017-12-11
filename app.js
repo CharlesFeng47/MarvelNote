@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
+var session = require('express-session');
 
 var home = require('./routes/home');
 var index = require('./routes/index');
@@ -29,6 +30,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
 
+// session的相关配置
+app.use(session({
+  secret: 'session_test',  // 用来对session id相关的cookie进行签名
+  saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
+  resave: false,  // 是否每次都重新保存会话，建议false
+  cookie: {
+    secure: false,
+    maxAge: 600 * 1000  // 有效期，单位是毫秒
+  }
+}));
 
 app.use('/', home);
 app.use('/index', index);
