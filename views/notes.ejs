@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="/stylesheets/notebooks.css">
     <link rel="stylesheet" href="/stylesheets/note.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
     <style>
         body {
             margin: 7px;
@@ -76,136 +77,138 @@
         </div>
 
     </div>
-
-    <!-- include libraries(jQuery, bootstrap, fontawesome) -->
-    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
-    <script src="/javascripts/jquery-3.2.1.min.js"></script>
-    <script src="/javascripts/bootstrap.js"></script>
-    <!-- include summernote css/js-->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-    <script src="/javascripts/summernote-zh-CN.js"></script>
-
-
-    <script src="/layui/layui.js"></script>
-    <script src="/javascripts/note_interaction.js"></script>
-    <script>
-      layui.use('element', function () {
-        var element = layui.element;
-      });
-
-      // 笔记单击之后变亮
-      $('.brief_note').click(function () {
-        $('.brief_note').each(function () {
-          $(this).css("border", "3px solid #BDC0BA");
-        })
-        $(this).css("border", "3px solid #159587");
-        var selected_note = $(this);
-
-        // 根据选取的笔记读取内容，呈现在右边
-        var cur_note_id = selected_note.find('.note_id').html();
-        alert(cur_note_id);
-
-        $.ajax({
-          type: "get",
-          async: true,
-          url: "/notes/" + cur_note_id,
-
-          success: function (result) {
-            // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
-            $('.note_area').find('.note_id').html(cur_note_id);
-            $('.note_area').find('#note_name_input').val(result[0].note_name);
-            $('.note_area').find('#note_nb').html(result[0].nb_name);
-            $('.note_area').find('#note_tag_input').val(result[0].tag);
-            $('.note_area').find('.mynote').html(result[0].content);
-          },
-          error: function (result) {
-            alert("错误" + result);
-          }
-        });
-      });
-
-      // 左侧单条笔记分享
-      $('.share_note').click(function (e) {
-
-        var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
-        var data = {
-          note_id: $(this).parent().parent().find(".note_id").html(),
-          now_public: now_public
-        };
-
-        var holding_btn = $(this);
-        var holding_btn_text = $(this).children("p.btn_group_tip");
-
-        $.ajax({
-          type: "post",
-          async: true,
-          url: "/notes/share_note",
-          data: data,
-
-          success: function (result) {
-            // 动态修改当前样式
-            if (now_public === 1) {
-              holding_btn.removeClass('layui-btn-warm');
-              holding_btn.css("color", "white");
-              holding_btn_text.html("已分享");
-            } else {
-              holding_btn.addClass('layui-btn-warm');
-              holding_btn.css("color", "red");
-              holding_btn_text.html("去分享");
-            }
-
-          },
-          error: function (result) {
-            alert("错误" + result);
-          }
-        });
-      });
-
-      // 左侧单条笔记删除
-      $('.delete_note').click(function (e) {
-        var data = {
-          note_id: $(this).parent().parent().find(".note_id").html()
-        };
-
-        var this_note = $(this).parent().parent().parent();
-
-        $.ajax({
-          type: "post",
-          async: true,
-          url: "/notes/delete_note",
-          data: data,
-
-          success: function (result) {
-            // 得到第一个元素，比较两 note_id
-            var first_note = $('.brief_note').first();
-            var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
-            alert("比对结果：" + is_first);
-
-            // 直接移除当前条目笔记的html
-            this_note.empty();
-            this_note.css("padding", "0px");
-            this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
-            this_note.css("height", "0%");
-
-
-            if (is_first) {
-              // 是第一条笔记，删除后续的间隔html
-              this_note.next().css("height", "0px");
-            } else {
-              // 不是第一条笔记，删除前序的间隔html
-              this_note.prev().css("height", "0px");
-            }
-          },
-          error: function (result) {
-            alert("错误" + result);
-          }
-        });
-      });
-
-    </script>
 </div>
+
+<!-- include libraries(jQuery, bootstrap, fontawesome) -->
+<link href="/stylesheets/bootstrap.css" rel="stylesheet">
+<link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
+<script src="/javascripts/jquery-3.2.1.min.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script src="/javascripts/summernote-zh-CN.js"></script>
+
+
+<script src="/layui/layui.js"></script>
+<script src="/javascripts/note_interaction.js"></script>
+<script src="/javascripts/header_interaction.js"></script>
+
+<script>
+  layui.use('element', function () {
+    var element = layui.element;
+  });
+
+  // 笔记单击之后变亮
+  $('.brief_note').click(function () {
+    $('.brief_note').each(function () {
+      $(this).css("border", "3px solid #BDC0BA");
+    })
+    $(this).css("border", "3px solid #159587");
+    var selected_note = $(this);
+
+    // 根据选取的笔记读取内容，呈现在右边
+    var cur_note_id = selected_note.find('.note_id').html();
+    alert(cur_note_id);
+
+    $.ajax({
+      type: "get",
+      async: true,
+      url: "/notes/" + cur_note_id,
+
+      success: function (result) {
+        // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
+        $('.note_area').find('.note_id').html(cur_note_id);
+        $('.note_area').find('#note_name_input').val(result[0].note_name);
+        $('.note_area').find('#note_nb').html(result[0].nb_name);
+        $('.note_area').find('#note_tag_input').val(result[0].tag);
+        $('.note_area').find('.mynote').html(result[0].content);
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
+  });
+
+  // 左侧单条笔记分享
+  $('.share_note').click(function (e) {
+
+    var now_public = $(this).parent().parent().find(".btn_group_tip").html() === '去分享' ? 1 : 0;
+    var data = {
+      note_id: $(this).parent().parent().find(".note_id").html(),
+      now_public: now_public
+    };
+
+    var holding_btn = $(this);
+    var holding_btn_text = $(this).children("p.btn_group_tip");
+
+    $.ajax({
+      type: "post",
+      async: true,
+      url: "/notes/share_note",
+      data: data,
+
+      success: function (result) {
+        // 动态修改当前样式
+        if (now_public === 1) {
+          holding_btn.removeClass('layui-btn-warm');
+          holding_btn.css("color", "white");
+          holding_btn_text.html("已分享");
+        } else {
+          holding_btn.addClass('layui-btn-warm');
+          holding_btn.css("color", "red");
+          holding_btn_text.html("去分享");
+        }
+
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
+  });
+
+  // 左侧单条笔记删除
+  $('.delete_note').click(function (e) {
+    var data = {
+      note_id: $(this).parent().parent().find(".note_id").html()
+    };
+
+    var this_note = $(this).parent().parent().parent();
+
+    $.ajax({
+      type: "post",
+      async: true,
+      url: "/notes/delete_note",
+      data: data,
+
+      success: function (result) {
+        // 得到第一个元素，比较两 note_id
+        var first_note = $('.brief_note').first();
+        var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
+        alert("比对结果：" + is_first);
+
+        // 直接移除当前条目笔记的html
+        this_note.empty();
+        this_note.css("padding", "0px");
+        this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
+        this_note.css("height", "0%");
+
+
+        if (is_first) {
+          // 是第一条笔记，删除后续的间隔html
+          this_note.next().css("height", "0px");
+        } else {
+          // 不是第一条笔记，删除前序的间隔html
+          this_note.prev().css("height", "0px");
+        }
+      },
+      error: function (result) {
+        alert("错误" + result);
+      }
+    });
+  });
+
+</script>
 </body>
 
 <% include ./footer.ejs %>
