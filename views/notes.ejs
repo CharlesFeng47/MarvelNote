@@ -30,12 +30,13 @@
             <% var now_note = note_data[i]; %>
 
             <% if (i == 0) { %>
-            <div class="brief_note" style="border: 3px solid #159587">
+            <div class="brief_note note_selected" style="border: 3px solid #159587">
                 <% } else { %>
                 <div class="brief_note">
                     <% } %>
                     <div style="height: 25px">
                         <p class="note_id" style="display: none"><%= now_note.note_id %></p>
+                        <p class="note_tag" style="display: none"><%= now_note.tag %></p>
                         <div class="layui-col-xs8">
                             <div class="brief_note_title">
                                 <%= now_note.note_name %>
@@ -103,8 +104,10 @@
   $('.brief_note').click(function () {
     $('.brief_note').each(function () {
       $(this).css("border", "3px solid #BDC0BA");
+      $(this).removeClass("note_selected");
     })
     $(this).css("border", "3px solid #159587");
+    $(this).addClass("note_selected");
     var selected_note = $(this);
 
     // 根据选取的笔记读取内容，呈现在右边

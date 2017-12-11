@@ -25,26 +25,6 @@ $(".note_div").click(function (e) {
 
 
 /**
- * body 内点击，退出 summernote
- */
-$("body").click(function (e) {
-  var markupStr = $('.mynote').summernote('code');
-  // alert(markupStr);
-  $('.mynote').summernote('destroy');
-  if (e) e.stack;
-});
-
-/**
- * body 外点击，退出 summernote
- */
-$(".fill_space").click(function (e) {
-  var markupStr = $('.mynote').summernote('code');
-  // alert(markupStr);
-  $('.mynote').summernote('destroy');
-  if (e) e.stack;
-});
-
-/**
  * 保存当前文档中的内容
  */
 $('.save_now_note').click(function () {
@@ -84,14 +64,22 @@ $('.save_now_note').click(function () {
 });
 
 /**
- * 丢弃当前文档中的内容
+ * 丢弃当前文档中的内容，恢复为原来的内容
  */
 $('.discard_now_note').click(function () {
   var note = $(this).parent().parent();
+  $('.mynote').summernote('destroy');
 
-  note.find('#note_name_input').val("");
-  note.find('#note_tag_input').val("");
-  note.find('.mynote').html("");
+  var selected_note = $('.note_selected');
+  if (typeof selected_note.html() !== 'undefined') {
+    note.find('#note_name_input').val(selected_note.find('.brief_note_title').html().trim());
+    note.find('#note_tag_input').val(selected_note.find('.note_tag').html());
+    note.find('.mynote').html(selected_note.find('.brief_note_content').html());
+  } else {
+    note.find('#note_name_input').val("");
+    note.find('#note_tag_input').val("");
+    note.find('.mynote').html("");
+  }
 });
 
 /**
@@ -186,4 +174,24 @@ $('#change_nb').click(function () {
       alert("错误" + result);
     }
   });
+});
+
+/**
+ * body 内点击，退出 summernote
+ */
+$("body").click(function (e) {
+  var markupStr = $('.mynote').summernote('code');
+  // alert(markupStr);
+  $('.mynote').summernote('destroy');
+  if (e) e.stack;
+});
+
+/**
+ * body 外点击，退出 summernote
+ */
+$(".fill_space").click(function (e) {
+  var markupStr = $('.mynote').summernote('code');
+  // alert(markupStr);
+  $('.mynote').summernote('destroy');
+  if (e) e.stack;
 });
