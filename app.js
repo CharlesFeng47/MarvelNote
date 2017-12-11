@@ -12,6 +12,7 @@ var index = require('./routes/index');
 var notes = require('./routes/notes');
 var notebooks = require('./routes/notebooks');
 var tag = require('./routes/tags');
+var community = require('./routes/community');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
@@ -39,7 +40,7 @@ app.use(session({
   resave: false,  // 是否每次都重新保存会话，建议false
   cookie: {
     secure: false,
-    maxAge: 600 * 1000  // 有效期，单位是毫秒
+    maxAge: 1800 * 1000  // 有效期，单位是毫秒
   }
 }));
 
@@ -48,6 +49,7 @@ app.use('/index', index);
 app.use('/notes', notes);
 app.use('/notebooks', notebooks);
 app.use('/tags', tag);
+app.use('/community', community);
 app.use('/users', users);
 app.use('/admin', admin);
 

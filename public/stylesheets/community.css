@@ -1,0 +1,68 @@
+.btn_group_tip {
+    margin-top: -5px;
+    color: #BDC0BA;
+}
+
+.icon {
+    font-size: 25px;
+    color: white;
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+/* 输入框的默认颜色 */
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #787b75;
+}
+
+.btn_container {
+    text-align: center;
+    margin-top: -3px;
+    float: right;
+}
+
+.search_tip {
+    font-size: 17px;
+    color: #BDC0BA;
+    border-color: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    margin-top: 2px;
+    width: 100%;
+}
+
+.user_line {
+    border: 3px solid #BDC0BA;
+}
+
+.user_content {
+    height: 65px;
+    padding: 10px 5px;
+}
+
+.user_id {
+    font-size: 16px;
+    color: #BDC0BA;
+}
+
+.share_note_line {
+    border: 3px solid #BDC0BA;
+}
+
+.share_note_line {
+    border: 3px solid #BDC0BA;
+    padding: 5px;
+}
+
+.share_note_content {
+    height: 125px;
+    padding: 10px 5px;
+}
+
+.share_note_file {
+    color: #BDC0BA;
+    padding: 0px 10px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word
+}
