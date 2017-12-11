@@ -9,7 +9,7 @@ var partials = require('express-partials');
 var index = require('./routes/index');
 var notes = require('./routes/notes');
 var notebooks = require('./routes/notebooks');
-
+var users = require('./routes/users');
 var admin = require('./routes/admin');
 
 
@@ -32,7 +32,7 @@ app.use(partials());
 app.use('/', index);
 app.use('/notes', notes);
 app.use('/notebooks', notebooks);
-
+app.use('/users', users);
 app.use('/admin', admin);
 
 

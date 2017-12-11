@@ -32,7 +32,7 @@
 
             <!-- 用户列表 -->
             <div class="layui-col-xs12 table_line">
-                <div class="layui-col-xs4 table_item">Charles</div>
+                <div class="user_id layui-col-xs4 table_item">charles</div>
                 <div class="layui-col-xs4 table_item">2017-12-08</div>
 
                 <!-- 编辑、删除按钮 -->
@@ -42,10 +42,10 @@
                     </div>
                     <div class="layui-btn-group layui-col-xs4 table_item_op_btn">
                         <div class="layui-col-xs12" style="text-align: center">
-                            <button class="layui-btn layui-btn-sm">
+                            <button class="user_edit layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe642;</i>
                             </button>
-                            <button class="layui-btn layui-btn-sm layui-btn-danger">
+                            <button class="user_delete layui-btn layui-btn-sm layui-btn-danger">
                                 <i class="layui-icon">&#xe640;</i>
                             </button>
                         </div>
@@ -344,31 +344,6 @@
 
             <hr class="layui-bg-gray table_item_separator">
             <div class="layui-col-xs12 table_line">
-                <div class="layui-col-xs4 table_item">Charles</div>
-                <div class="layui-col-xs4 table_item">2017-12-08</div>
-
-                <!-- 编辑、删除按钮 -->
-                <div class="layui-col-xs4">
-                    <div class="layui-col-xs4">
-                        <div class="table_item table_item_op_btn_tip" style="float: right">编辑</div>
-                    </div>
-                    <div class="layui-btn-group layui-col-xs4 table_item_op_btn">
-                        <div class="layui-col-xs12" style="text-align: center">
-                            <button class="layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe642;</i>
-                            </button>
-                            <button class="layui-btn layui-btn-sm layui-btn-danger">
-                                <i class="layui-icon">&#xe640;</i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="layui-col-xs4">
-                        <div class="table_item table_item_op_btn_tip" style="float: left">删除</div>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="layui-bg-gray table_item_separator"><div class="layui-col-xs12">
                 <div class="layui-col-xs4 table_item">Charles</div>
                 <div class="layui-col-xs4 table_item">2017-12-08</div>
 
@@ -559,6 +534,7 @@
 <script src="/javascripts/bootstrap.js"></script>
 
 <script src="/layui/layui.js"></script>
+<script src="/javascripts/table_interaction.js"></script>
 <script>
   layui.use('element', function () {
     var element = layui.element;

@@ -41,12 +41,12 @@
                         <% } else { %>
                         <div class="nb2">
                             <% } %>
-                            <label class="layui-col-xs12" style="text-align: center">
+                            <label class="nb_icon_area layui-col-xs12" style="text-align: center">
                                 <img alt="Background" src="/images/nb_covers/notebook<%= now_nb.nb_icon_id %>.png"
                                      style="max-width: 100% ">
                             </label>
                             <p class="nb_id" style="display: none"><%= now_nb.nb_id %></p>
-                            <h4 class="layui-col-xs12" style="text-align: center"><%= now_nb.nb_name %></h4>
+                            <h4 class="nb_name layui-col-xs12" style="text-align: center"><%= now_nb.nb_name %></h4>
                             <p class="layui-col-xs12 nb_description">
                                 描述：<%= now_nb.description %></p>
                             <button class="delete_nb layui-col-xs-offset5 layui-col-xs2 layui-btn layui-btn-sm layui-btn-danger">
@@ -276,10 +276,18 @@
       });
 
       /**
-       * 点击一本笔记本，跳转查看该笔记本中的所有笔记
+       * 点击一本笔记本图片，跳转查看该笔记本中的所有笔记
        */
-      $('.nb_area').click(function () {
-        var this_nb_id = $(this).find('.nb_id').html();
+      $('.nb_icon_area').click(function () {
+        var this_nb_id = $(this).parent().find('.nb_id').html();
+        window.location.href = "/notes?nb_id=" + this_nb_id;
+      });
+
+      /**
+       * 点击一本笔记本名称，跳转查看该笔记本中的所有笔记
+       */
+      $('.nb_name').click(function () {
+        var this_nb_id = $(this).parent().find('.nb_id').html();
         window.location.href = "/notes?nb_id=" + this_nb_id;
       });
 
