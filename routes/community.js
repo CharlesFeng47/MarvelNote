@@ -52,7 +52,7 @@ router.get('/', function (request, response, next) {
               // 我关注的用户中公开的笔记
               var all_public_notes_sql = "select note.*, user_id from note, notebook, relationship where following = '"
                 + request.session.cur_user + "' " + "and be_followed = notebook.user_id and notebook.nb_id = note.nb_id "
-                + " and note.is_public = 1 order by update_time desc";
+                + " and note.is_public = 1 order by upvote_num desc";
               db.all(all_public_notes_sql, function (err, my_all_share_notes) {
                 if (err) {
                   console.log(err);

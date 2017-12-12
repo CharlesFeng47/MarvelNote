@@ -191,6 +191,7 @@
         to_follow: $(this).parent().parent().find(".user_id").html().trim(),
         now_following: now_following
       };
+      // alert(JSON.stringify(now_following));
 
       var holding_btn = $(this);
       var holding_btn_text = $(this).children("p.btn_group_tip");
@@ -212,9 +213,20 @@
             holding_btn.css("color", "red");
             holding_btn_text.html("关注");
           }
+
+          layui.define(['layer'], function (exports) {
+            var layer = layui.layer;
+
+            if (now_following === true) {
+              layer.alert("已关注！", {icon: 1, time: 1500});
+            } else {
+              layer.alert("已取消关注！", {icon: 1, time: 1500});
+            }
+          });
+
         },
         error: function (result) {
-          alert("错误" + result);
+          // alert("错误" + result);
         }
       });
     });
@@ -279,9 +291,6 @@
       var upvote_btn = $(this);
       var upvote_btn_text = $(this).children("p.btn_group_tip");
 
-      var cur_upvote_num = upvote_btn.find('.btn_group_tip').html();
-      alert(cur_upvote_num)
-
       var now_upvote_state = !upvote_btn.hasClass('has_upvoted');
 
       var now_update_num = upvote_btn.find('.btn_group_tip').html();
@@ -293,7 +302,7 @@
         now_upvote_state: now_upvote_state,
         now_update_num: now_update_num
       };
-      alert(JSON.stringify(data));
+      // alert(JSON.stringify(data));
 
       $.ajax({
         type: "post",
@@ -302,6 +311,16 @@
         data: data,
 
         success: function (result) {
+          layui.define(['layer'], function (exports) {
+            var layer = layui.layer;
+
+            if (now_upvote_state === true) {
+              layer.alert("已点赞！", {icon: 1, time: 1500});
+            } else {
+              layer.alert("已取消点赞！", {icon: 1, time: 1500});
+            }
+          });
+
           // 动态修改当前样式
           if (now_upvote_state === true) {
             upvote_btn.addClass('has_upvoted');
