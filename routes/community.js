@@ -114,25 +114,4 @@ router.post('/follow', function (request, response, next) {
   });
 });
 
-
-/**
- * 访问一个专门的笔记条目
- */
-router.get('/:cur_note_id', function (request, response, next) {
-
-  console.log(request.params.cur_note_id);
-  var sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and " +
-    "note_id = '" + request.params.cur_note_id + "'";
-
-  db.all(sql, function (err, res) {
-    if (err) {
-      console.log(err);
-      response.render('error');
-    } else {
-      console.log(JSON.stringify(res));
-      response.send(res);
-    }
-  });
-});
-
 module.exports = router;

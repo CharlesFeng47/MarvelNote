@@ -163,6 +163,27 @@ router.post('/delete_note', function (request, response, next) {
 });
 
 /**
+ * 改变指定的笔记的笔记本
+ */
+router.post('/change_nb', function (request, response, next) {
+
+  var request_body = request.body;
+  var sql = "update note set nb_id = '" + request_body.nb_id + "', update_time = '" + get_cur_datetime()
+    + "' where note_id = '" + request_body.note_id + "'";
+  console.log(sql);
+
+  db.all(sql, function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error')
+    } else {
+      console.log(JSON.stringify(res));
+      response.send('change success');
+    }
+  });
+});
+
+/**
  * 访问一个专门的笔记条目
  */
 router.get('/:cur_note_id', function (request, response, next) {

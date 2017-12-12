@@ -57,7 +57,7 @@ $('#modify_pwd').click(function () {
         var pwd2 = $('#user_new_pwd_2').val();
 
         if (pwd1 !== pwd2) {
-          alert("两次密码输入不一致");
+          layer.alert("两次密码输入不一致，请检查后重试！", {icon: 2, time: 1500});
         } else {
           // 修改用户密码
           var data = {
@@ -72,8 +72,8 @@ $('#modify_pwd').click(function () {
             data: data,
 
             success: function (result) {
-              alert(result);
               layer.close(index);
+              layer.alert("修改成功！", {icon: 1, time: 1500});
             },
             error: function (result) {
               alert("错误" + result);
@@ -100,7 +100,6 @@ $('#exit').click(function () {
 
     success: function (result) {
       if (result === "0") {
-        console.log("退出成功");
         window.location.href = "/";
       }
     },

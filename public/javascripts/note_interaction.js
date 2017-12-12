@@ -47,6 +47,11 @@ $('.save_now_note').click(function () {
     data: note_data,
 
     success: function (result) {
+      layui.define(['layer'], function (exports) {
+        var layer = layui.layer;
+        layer.alert("保存成功！", {icon: 1, time: 1500});
+      });
+
       // 动态修改当前样式
       var cur_save_now_note_id = note.find('.note_id').html();
       $('.brief_note').each(function () {
@@ -80,6 +85,11 @@ $('.discard_now_note').click(function () {
     note.find('#note_tag_input').val("");
     note.find('.mynote').html("");
   }
+
+  // layui.define(['layer'], function (exports) {
+  //   var layer = layui.layer;
+  //   layer.alert("已丢弃！", {icon: 1, time: 1500});
+  // });
 });
 
 /**
@@ -111,6 +121,7 @@ $('.download_now_note').click(function () {
  */
 $('#change_nb').click(function () {
   var cur_note_area = $(this).parent().parent();
+  var pre_nb_id = cur_note_area.find('.nb_id').html();
 
   // 先从数据库中取出该用户的所有笔记本
   $.ajax({
@@ -164,7 +175,6 @@ $('#change_nb').click(function () {
 
             success: function () {
               // 一开始设置原本的笔记本高亮
-              var pre_nb_id = cur_note_area.find('.nb_id').html();
               $(".select_cover").each(function () {
                 if ($(this).find('.nb_id').html() === pre_nb_id) {
                   $(this).css("border", "3px solid #BDC0BA");
@@ -183,10 +193,28 @@ $('#change_nb').click(function () {
               });
             },
             yes: function (index, layero) {
-              // 修改 note_area 的笔记本区域
-              cur_note_area.find('.nb_id').html($('.cover_selected').find('.nb_id').html());
-              cur_note_area.find('#note_nb').html($('.cover_selected').find('.nb_name').html());
-              layer.close(index);
+              var data = {
+                note_id: cur_note_area.find('.note_id').html(),
+                nb_id: $('.cover_selected').find('.nb_id').html()
+              };
+
+              $.ajax({
+                type: "post",
+                async: true,
+                url: "/notes/change_nb",
+                data: data,
+
+                success: function (result) {
+                  // 修改 note_area 的笔记本区域
+                  cur_note_area.find('.nb_id').html($('.cover_selected').find('.nb_id').html());
+                  cur_note_area.find('#note_nb').html($('.cover_selected').find('.nb_name').html());
+                  layer.close(index);
+                  layer.alert("修改成功！", {icon: 1, time: 1500});
+                },
+                error: function (result) {
+                  alert("错误" + result);
+                }
+              });
             },
             cancel: function () {
 
@@ -206,8 +234,6 @@ $('#change_nb').click(function () {
  * body 内点击，退出 summernote
  */
 $("body").click(function (e) {
-  var markupStr = $('.mynote').summernote('code');
-  // alert(markupStr);
   $('.mynote').summernote('destroy');
   if (e) e.stack;
 });
@@ -216,8 +242,6 @@ $("body").click(function (e) {
  * body 外点击，退出 summernote
  */
 $(".fill_space").click(function (e) {
-  var markupStr = $('.mynote').summernote('code');
-  // alert(markupStr);
   $('.mynote').summernote('destroy');
   if (e) e.stack;
 });

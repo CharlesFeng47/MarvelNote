@@ -220,7 +220,6 @@
             data: data,
 
             success: function (result) {
-              alert(result);
               window.location.href = "/notebooks";
             },
             error: function (result) {
@@ -249,47 +248,56 @@
 
       var this_note = $(this).parent().parent();
 
-      $.ajax({
-        type: "post",
-        async: true,
-        url: "/notebooks/delete_nb",
-        data: data,
+      layui.define(['layer'], function (exports) {
+        var layer = layui.layer;
 
-        success: function (result) {
-          alert(result);
+        layer.confirm("确定删除？", {btn: ['确认', '取消']}, function () {
+          $.ajax({
+            type: "post",
+            async: true,
+            url: "/notebooks/delete_nb",
+            data: data,
 
-          // 如果被删除的是第一行元素，需要修改之后一个元素css(nb2 -> nb1)
-          var first_4 = [];
-          var first_4_index = 0;
+            success: function (result) {
+              layer.alert("删除成功！", {icon: 1, time: 1500});
 
-          var is_this_nb_in_first_4 = false;
-          var delete_nb_id = this_note.find('.nb_id').html();
-          $('.nb1').each(function () {
-            var temp_nb_id = $(this).find('.nb_id').html();
-            first_4[first_4_index] = temp_nb_id;
-            first_4_index++;
+              // 如果被删除的是第一行元素，需要修改之后一个元素css(nb2 -> nb1)
+              var first_4 = [];
+              var first_4_index = 0;
 
-            if (temp_nb_id === delete_nb_id) {
-              is_this_nb_in_first_4 = true;
+              var is_this_nb_in_first_4 = false;
+              var delete_nb_id = this_note.find('.nb_id').html();
+              $('.nb1').each(function () {
+                var temp_nb_id = $(this).find('.nb_id').html();
+                first_4[first_4_index] = temp_nb_id;
+                first_4_index++;
+
+                if (temp_nb_id === delete_nb_id) {
+                  is_this_nb_in_first_4 = true;
+                }
+              });
+              // alert(first_4);
+              // alert(is_this_nb_in_first_4);
+
+              if (is_this_nb_in_first_4) {
+                var nb_no_5 = $('.nb2').first();
+                nb_no_5.removeClass("nb2");
+                nb_no_5.addClass("nb1");
+              }
+
+              // 动态修改当前样式
+              this_note.empty();
+
+            },
+            error: function (result) {
+              alert("错误" + result);
             }
           });
-          // alert(first_4);
-          // alert(is_this_nb_in_first_4);
+        }, function () {
+        });
 
-          if (is_this_nb_in_first_4) {
-            var nb_no_5 = $('.nb2').first();
-            nb_no_5.removeClass("nb2");
-            nb_no_5.addClass("nb1");
-          }
-
-          // 动态修改当前样式
-          this_note.empty();
-
-        },
-        error: function (result) {
-          alert("错误" + result);
-        }
       });
+
     });
 
     /**

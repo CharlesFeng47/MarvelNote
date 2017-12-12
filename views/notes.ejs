@@ -129,7 +129,7 @@
 
       // 根据选取的笔记读取内容，呈现在右边
       var cur_note_id = selected_note.find('.note_id').html();
-      alert(cur_note_id);
+      // alert(cur_note_id);
 
       $.ajax({
         type: "get",
@@ -139,6 +139,7 @@
         success: function (result) {
           // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
           $('.note_area').find('.note_id').html(cur_note_id);
+          $('.note_area').find('.nb_id').html(result[0].nb_id);
           $('.note_area').find('#note_name_input').val(result[0].note_name);
           $('.note_area').find('#note_nb').html(result[0].nb_name);
           $('.note_area').find('#note_tag_input').val(result[0].tag);
@@ -184,6 +185,16 @@
           var brief_note_time = holding_btn.parent().parent().find('.brief_note_time');
           brief_note_time.html(result);
 
+          layui.define(['layer'], function (exports) {
+            var layer = layui.layer;
+
+            if (now_public === 1) {
+              layer.alert("分享成功！", {icon: 1, time: 1500});
+            } else {
+              layer.alert("取消分享成功！", {icon: 1, time: 1500});
+            }
+          });
+
         },
         error: function (result) {
           alert("错误" + result);
@@ -199,36 +210,45 @@
 
       var this_note = $(this).parent().parent().parent();
 
-      $.ajax({
-        type: "post",
-        async: true,
-        url: "/notes/delete_note",
-        data: data,
+      layui.define(['layer'], function (exports) {
+        var layer = layui.layer;
 
-        success: function (result) {
-          // 得到第一个元素，比较两 note_id
-          var first_note = $('.brief_note').first();
-          var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
-          alert("比对结果：" + is_first);
+        layer.confirm("确定删除？", {btn: ['确认', '取消']}, function () {
+          $.ajax({
+            type: "post",
+            async: true,
+            url: "/notes/delete_note",
+            data: data,
 
-          // 直接移除当前条目笔记的html
-          this_note.empty();
-          this_note.css("padding", "0px");
-          this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
-          this_note.css("height", "0%");
+            success: function (result) {
+              layer.alert("删除成功！", {icon: 1, time: 1500});
+
+              // 得到第一个元素，比较两 note_id
+              var first_note = $('.brief_note').first();
+              var is_first = first_note.find('.note_id').html() === this_note.find('.note_id').html();
+              // alert("比对结果：" + is_first);
+
+              // 直接移除当前条目笔记的html
+              this_note.empty();
+              this_note.css("padding", "0px");
+              this_note.css("border", "0px solid rgba(0, 0, 0, 0)");
+              this_note.css("height", "0%");
 
 
-          if (is_first) {
-            // 是第一条笔记，删除后续的间隔html
-            this_note.next().css("height", "0px");
-          } else {
-            // 不是第一条笔记，删除前序的间隔html
-            this_note.prev().css("height", "0px");
-          }
-        },
-        error: function (result) {
-          alert("错误" + result);
-        }
+              if (is_first) {
+                // 是第一条笔记，删除后续的间隔html
+                this_note.next().css("height", "0px");
+              } else {
+                // 不是第一条笔记，删除前序的间隔html
+                this_note.prev().css("height", "0px");
+              }
+            },
+            error: function (result) {
+              alert("错误" + result);
+            }
+          });
+        }, function () {
+        });
       });
     });
   }
