@@ -41,7 +41,7 @@ app.use(session({
   resave: false,  // 是否每次都重新保存会话，建议false
   cookie: {
     secure: false,
-    maxAge: 1800 * 1000  // 有效期，单位是毫秒
+    maxAge: 600 * 1000  // 有效期，单位是毫秒
   }
 }));
 

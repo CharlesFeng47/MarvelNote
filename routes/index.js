@@ -17,12 +17,24 @@ router.get('/', function (request, response, next) {
           response.render('error');
         } else {
           console.log(JSON.stringify(res));
-          response.render('index', {
-            has_note: false,
-            readonly: false,
-            default_nb: res,
-            cur_user: request.session.cur_user
-          });
+
+          if (res.length === 0) {
+            response.render('index', {
+              has_note: false,
+              has_nb: false,
+              readonly: false,
+              default_nb: res,
+              cur_user: request.session.cur_user
+            });
+          } else {
+            response.render('index', {
+              has_note: false,
+              has_nb: true,
+              readonly: false,
+              default_nb: res,
+              cur_user: request.session.cur_user
+            });
+          }
         }
       });
     } else {

@@ -19,6 +19,7 @@ router.get('/', function (request, response, next) {
 
         response.render('lookup', {
           has_note: false,
+          has_nb: false,
           readonly: true,
           read_data: {
             title: request.query.title,

@@ -6,7 +6,11 @@
     <p class="nb_id" style="display: none"><%= note_data[0].nb_id %></p>
     <% } else { %>
     <p class="note_id" style="display: none">-1</p>
+    <% if(has_nb === true) { %>
     <p class="nb_id" style="display: none"><%= default_nb[0].nb_id %></p>
+    <% } else { %>
+    <p class="nb_id" style="display: none">-1</p>
+    <% } %>
     <% } %>
 
     <!--  笔记名字 -->
@@ -28,7 +32,6 @@
         </div>
     </div>
 
-    <!-- 所属笔记本 -->
     <% if(readonly === true) { %>
     <!-- 所属作者 -->
     <div id="note_area_author" class="layui-col-xs4 note_item">
@@ -45,18 +48,21 @@
         </div>
     </div>
     <% } else { %>
+    <!-- 所属笔记本 -->
     <div id="note_area_nb" class="layui-col-xs4 note_item">
         <label class="layui-col-xs1 note_title_icon">
             <i class="layui-icon">&#xe622;</i>
         </label>
         <div class='layui-col-xs6 note_title_outer'>
-            <div id="note_nb" class="note_item_word">
-                <% if(has_note === true) { %>
-                <%= note_data[0].nb_name %>
-                <% } else { %>
-                <%= default_nb[0].nb_name %>
-                <% } %>
-            </div>
+            <% if(has_note === true) { %>
+            <div id="note_nb" class="note_item_word"><%= note_data[0].nb_name %></div>
+            <% } else { %>
+            <% if(has_nb === true) { %>
+            <div id="note_nb" class="note_item_word"><%= default_nb[0].nb_name %></div>
+            <% } else { %>
+            <div id="note_nb" class="note_item_word" style="color: #787b75">【未创建过笔记本】</div>
+            <% } %>
+            <% } %>
         </div>
         <label id="change_nb" class="layui-col-xs1 note_title_icon">
             <i class="layui-icon">&#xe671;</i>

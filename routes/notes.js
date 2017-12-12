@@ -36,24 +36,37 @@ router.get('/', function (request, response, next) {
           console.log(JSON.stringify("wanted_notes: " + JSON.stringify(wanted_notes)));
 
           if (wanted_notes.length === 0) {
-            // 用户没有笔记本，呈现默认的笔记本、
+            // 用户没有笔记，呈现默认的笔记本，若没有默认的笔记本，则不可编辑笔记本项
             db.all("select * from notebook limit 1", function (err, res) {
               if (err) {
                 console.log(err);
                 response.render('error');
               } else {
                 console.log(JSON.stringify(res));
-                response.render('notes', {
-                  has_note: false,
-                  readonly: false,
-                  default_nb: res,
-                  cur_user: request.session.cur_user
-                });
+
+                if (res.length === 0) {
+                  response.render('notes', {
+                    has_note: false,
+                    has_nb: false,
+                    readonly: false,
+                    default_nb: res,
+                    cur_user: request.session.cur_user
+                  });
+                } else {
+                  response.render('notes', {
+                    has_note: false,
+                    has_nb: true,
+                    readonly: false,
+                    default_nb: res,
+                    cur_user: request.session.cur_user
+                  });
+                }
               }
             });
           } else {
             response.render('notes', {
               has_note: true,
+              has_nb: true,
               readonly: false,
               note_data: wanted_notes,
               cur_user: request.session.cur_user
