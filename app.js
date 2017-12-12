@@ -13,6 +13,7 @@ var notes = require('./routes/notes');
 var notebooks = require('./routes/notebooks');
 var tag = require('./routes/tags');
 var community = require('./routes/community');
+var lookup = require('./routes/lookup');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
@@ -50,6 +51,7 @@ app.use('/notes', notes);
 app.use('/notebooks', notebooks);
 app.use('/tags', tag);
 app.use('/community', community);
+app.use('/lookup', lookup);
 app.use('/users', users);
 app.use('/admin', admin);
 

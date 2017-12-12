@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="/stylesheets/community.css">
     <link rel="stylesheet" href="/stylesheets/note.css">
+    <link rel="stylesheet" href="/stylesheets/notebooks.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
     <style>
         body {
@@ -90,17 +91,7 @@
                         <i class="layui-icon">&#xe617;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px"><%= now_note.note_name %></div>
-                    </div>
-                </div>
-
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px"><%= now_note.tag %></div>
+                        <div class="share_note_title note_item_word" style="width: 270px"><%= now_note.note_name %></div>
                     </div>
                 </div>
 
@@ -110,7 +101,17 @@
                         <i class="layui-icon">&#xe612;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="note_item_word" style="width: 270px"><%= now_note.user_id %></div>
+                        <div class="share_note_author note_item_word" style="width: 270px"><%= now_note.user_id %></div>
+                    </div>
+                </div>
+
+                <!-- 所属标签 -->
+                <div class="layui-col-xs3 note_item">
+                    <label class="layui-col-xs1 note_title_icon">
+                        <i class="layui-icon">&#xe64c;</i>
+                    </label>
+                    <div class="layui-col-xs10 note_title_outer">
+                        <div class="share_note_tag note_item_word" style="width: 270px"><%= now_note.tag %></div>
                     </div>
                 </div>
 
@@ -238,7 +239,15 @@
    * 查看分享的笔记详情
    */
   $('.check_btn').click(function () {
-    alert("check");
+    var this_share_note = $(this).parent().parent();
+    var share_note_title = this_share_note.find('.share_note_title').html().trim();
+    var share_note_author = this_share_note.find('.share_note_author').html().trim();
+    var share_note_tag = this_share_note.find('.share_note_tag').html().trim();
+    var share_note_file = this_share_note.find('.share_note_file').html().trim();
+
+    var myWindow = window.open("/lookup?readonly=true&title=" + share_note_title + "&author=" + share_note_author
+      + "&tag=" + share_note_tag + "&content=" + share_note_file);
+    myWindow.focus();
   });
 
   /**
@@ -252,14 +261,14 @@
     if ($(this).hasClass('.has_upvoted')) {
       data = {
         note_id: a,
-        now_upvote_num:
-      }
+        now_upvote_num: 0
+      };
     }
 
   });
 
   /**
-   * TODO 用户模糊搜索【访问数据库】
+   * 用户模糊搜索【访问数据库】
    */
   $('#search').bind('keypress', function (event) {
     if (event.keyCode === 13) {

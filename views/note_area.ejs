@@ -19,13 +19,33 @@
             <input id="note_name_input" type="text" maxlength="11" class=" note_item_word" placeholder="您的笔记名称"
                    value="<%= note_data[0].note_name %>">
             <% } else { %>
+            <% if(readonly === true) { %>
+            <div class="note_item_word" style="width: 270px"><%= read_data.title %></div>
+            <% } else { %>
             <input id="note_name_input" type="text" maxlength="11" class=" note_item_word" placeholder="您的笔记名称">
+            <% } %>
             <% } %>
         </div>
     </div>
 
     <!-- 所属笔记本 -->
-    <div class="layui-col-xs4 note_item">
+    <% if(readonly === true) { %>
+    <!-- 所属作者 -->
+    <div id="note_area_author" class="layui-col-xs4 note_item">
+        <label class="layui-col-xs1 note_title_icon">
+            <i class="layui-icon">&#xe612;</i>
+        </label>
+        <div class="layui-col-xs10 note_title_outer">
+
+            <% if(readonly === true) { %>
+            <div class="note_item_word" style="width: 270px"><%= read_data.author %></div>
+            <% } else { %>
+            <div class="note_item_word" style="width: 270px"><%= cur_user %></div>
+            <% } %>
+        </div>
+    </div>
+    <% } else { %>
+    <div id="note_area_nb" class="layui-col-xs4 note_item">
         <label class="layui-col-xs1 note_title_icon">
             <i class="layui-icon">&#xe622;</i>
         </label>
@@ -41,10 +61,8 @@
         <label id="change_nb" class="layui-col-xs1 note_title_icon">
             <i class="layui-icon">&#xe671;</i>
         </label>
-        <!--<button class="layui-col-xs-offset1 layui-col-xs1 layui-btn layui-btn-sm layui-btn-warm">-->
-        <!--<i class="layui-icon">&#xe671;</i>-->
-        <!--</button>-->
     </div>
+    <% } %>
 
     <!-- 所属标签 -->
     <div class="layui-col-xs3 note_item">
@@ -56,7 +74,11 @@
             <input id="note_tag_input" type="text" class="note_item_word" placeholder="默认无标签"
                    value="<%= note_data[0].tag %>">
             <% } else { %>
+            <% if(readonly === true) { %>
+            <div class="note_item_word" style="width: 270px"><%= read_data.tag %></div>
+            <% } else { %>
             <input id="note_tag_input" type="text" class="note_item_word" placeholder="默认无标签">
+            <% } %>
             <% } %>
         </div>
     </div>
@@ -84,6 +106,10 @@
         <div class="summernote mynote" style="z-index: 1000; color: #BDC0BA">
             <% if(has_note === true) { %>
             <%- note_data[0].content %>
+            <% } else { %>
+            <% if(readonly === true) { %>
+            <div class="note_item_word" style="width: 270px"><%= read_data.content %></div>
+            <% } %>
             <% } %>
         </div>
     </div>

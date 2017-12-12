@@ -5,26 +5,35 @@ var sqlite = require('sqlite3');
 var db = new sqlite.Database('./MarvelNote.sqlite');
 
 /**
- * 新建一条笔记
+ * 查看一条笔记
  */
 router.get('/', function (request, response, next) {
   if (request.session.cur_user) {
     console.log("--------- LOG IN: " + request.session.cur_user);
     if (request.session.cur_user_type === 0) {
-      db.all("select * from notebook where user_id = '" + request.session.cur_user + "' limit 1", function (err, res) {
-        if (err) {
-          console.log(err);
-          response.render('error');
-        } else {
-          console.log(JSON.stringify(res));
-          response.render('index', {
-            has_note: false,
-            readonly: false,
-            default_nb: res,
-            cur_user: request.session.cur_user
-          });
-        }
-      });
+      console.log(request.query);
+
+      var sql;
+      if (typeof request.query.readonly !== 'undefined') {
+        // 从参数重接受内容，并只呈现
+
+        response.render('lookup', {
+          has_note: false,
+          readonly: true,
+          read_data: {
+            title: request.query.title,
+            author: request.query.author,
+            tag: request.query.tag,
+            content: request.query.content
+          },
+          default_nb: [{
+            "nb_id": -1,
+            "nb_name": ""
+          }],
+          cur_user: request.session.cur_user
+        });
+
+      }
     } else {
       // 管理员没有权限访问普通用户界面
       response.render("error", {message: "您的账号暂没有访问此页面的权限！"});

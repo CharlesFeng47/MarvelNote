@@ -17,10 +17,10 @@ router.get('/', function (request, response, next) {
       var sql;
       if (typeof request.query.nb_id !== 'undefined') {
         sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.nb_id = '"
-          + request.query.nb_id + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
+          + request.query.nb_id + "' and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
       } else if (typeof request.query.tag !== 'undefined') {
         sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id and note.tag = '"
-          + request.query.tag + "' and notebook.user_id = '" + request.session.cur_user +  "' order by note.update_time desc";
+          + request.query.tag + "' and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
       } else {
         sql = "select note.*, notebook.nb_name from note, notebook where note.nb_id = notebook.nb_id " +
           " and notebook.user_id = '" + request.session.cur_user + "' order by note.update_time desc";
@@ -33,7 +33,7 @@ router.get('/', function (request, response, next) {
           response.render('error');
         } else {
           var wanted_notes = res;
-          console.log(JSON.stringify(wanted_notes));
+          console.log(JSON.stringify("wanted_notes: " + JSON.stringify(wanted_notes)));
 
           if (wanted_notes.length === 0) {
             // 用户没有笔记本，呈现默认的笔记本、
@@ -43,11 +43,21 @@ router.get('/', function (request, response, next) {
                 response.render('error');
               } else {
                 console.log(JSON.stringify(res));
-                response.render('notes', {has_note: false, default_nb: res, cur_user: request.session.cur_user});
+                response.render('notes', {
+                  has_note: false,
+                  readonly: false,
+                  default_nb: res,
+                  cur_user: request.session.cur_user
+                });
               }
             });
           } else {
-            response.render('notes', {has_note: true, note_data: wanted_notes, cur_user: request.session.cur_user});
+            response.render('notes', {
+              has_note: true,
+              readonly: false,
+              note_data: wanted_notes,
+              cur_user: request.session.cur_user
+            });
           }
         }
       });
