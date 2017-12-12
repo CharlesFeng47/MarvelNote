@@ -81,6 +81,7 @@
         <div style="height: 5px;"></div>
         <% } %>
         <% var now_note = share_notes_data[i]; %>
+        <% var now_upvote = upvote_data[i]; %>
 
         <div class="share_note_line">
             <div class="share_note_content">
@@ -116,14 +117,18 @@
 
                 <!-- 查看详情、点赞按钮 -->
                 <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="check_btn layui-btn layui-btn-sm">
+                    <button class="check_btn layui-btn layui-btn-sm layui-btn-normal">
                         <i class="layui-icon">&#xe857;</i>
                         <p class="btn_group_tip">查看详情</p>
                     </button>
-                    <button class="upvoke_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip"><%= now_note.upvote %></p>
-                    </button>
+                    <% if(now_upvote.has_upvoted === "true") { %>
+                    <button class="upvoke_btn has_upvoted layui-btn layui-btn-sm" style="color: red">
+                        <% } else { %>
+                        <button class="upvoke_btn layui-btn layui-btn-sm">
+                            <% } %>
+                            <i class="layui-icon">&#xe6c6;</i>
+                            <p class="btn_group_tip"><%= now_upvote.upvote_num %></p>
+                        </button>
                 </div>
 
                 <div class="layui-col-xs12" style="height: 16px"></div>
@@ -233,6 +238,32 @@
       });
     });
   }
+
+
+  /**
+   * 查看分享的笔记详情
+   */
+  $('.check_btn').click(function () {
+    alert("check");
+  });
+
+  /**
+   * 为分享的笔记点赞
+   */
+  $('.upvoke_btn').click(function () {
+    var cur_upvote_num = $(this).find('.btn_group_tip').html();
+    alert(cur_upvote_num)
+
+    var data;
+    if ($(this).hasClass('.has_upvoted')) {
+      data = {
+        note_id: a,
+        now_upvote_num:
+      }
+    }
+
+  });
+
 
   /**
    * TODO 用户模糊搜索【访问数据库】
