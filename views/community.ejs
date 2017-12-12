@@ -81,7 +81,6 @@
         <div style="height: 5px;"></div>
         <% } %>
         <% var now_note = share_notes_data[i]; %>
-        <% var now_upvote = upvote_data[i]; %>
 
         <div class="share_note_line">
             <div class="share_note_content">
@@ -121,14 +120,10 @@
                         <i class="layui-icon">&#xe857;</i>
                         <p class="btn_group_tip">查看详情</p>
                     </button>
-                    <% if(now_upvote.has_upvoted === "true") { %>
-                    <button class="upvoke_btn has_upvoted layui-btn layui-btn-sm" style="color: red">
-                        <% } else { %>
-                        <button class="upvoke_btn layui-btn layui-btn-sm">
-                            <% } %>
-                            <i class="layui-icon">&#xe6c6;</i>
-                            <p class="btn_group_tip"><%= now_upvote.upvote_num %></p>
-                        </button>
+                    <button class="upvoke_btn layui-btn layui-btn-sm">
+                        <i class="layui-icon">&#xe6c6;</i>
+                        <p class="btn_group_tip">0</p>
+                    </button>
                 </div>
 
                 <div class="layui-col-xs12" style="height: 16px"></div>
@@ -239,7 +234,6 @@
     });
   }
 
-
   /**
    * 查看分享的笔记详情
    */
@@ -263,7 +257,6 @@
     }
 
   });
-
 
   /**
    * TODO 用户模糊搜索【访问数据库】
