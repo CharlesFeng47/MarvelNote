@@ -75,71 +75,72 @@
 
     <!-- 笔记内容主体部分 -->
     <div class="layui-body" style="margin: 15px 7px 7px 20px; background: #393D49; left:295px; top: 53px">
+        <div class="all_share_notes_list">
+            <% if(has_share_note === true) { %>
+            <% for (var i = 0; i < share_notes_data.length; i++) { %>
+            <% if (i != 0) { %>
+            <div style="height: 5px;"></div>
+            <% } %>
+            <% var now_note = share_notes_data[i]; %>
 
-        <% if(has_share_note === true) { %>
-        <% for (var i = 0; i < share_notes_data.length; i++) { %>
-        <% if (i != 0) { %>
-        <div style="height: 5px;"></div>
-        <% } %>
-        <% var now_note = share_notes_data[i]; %>
-
-        <div class="share_note_line">
-            <div class="share_note_content">
-                <!--  笔记名字 -->
-                <div class="layui-col-xs4 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe617;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="share_note_title note_item_word"
-                             style="width: 270px"><%= now_note.note_name %></div>
+            <div class="share_note_line">
+                <div class="share_note_content">
+                    <!--  笔记名字 -->
+                    <div class="layui-col-xs4 note_item">
+                        <label class="layui-col-xs1 note_title_icon">
+                            <i class="layui-icon">&#xe617;</i>
+                        </label>
+                        <div class="layui-col-xs10 note_title_outer">
+                            <div class="share_note_title note_item_word"
+                                 style="width: 270px"><%= now_note.note_name %></div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 所属作者 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe612;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="share_note_author note_item_word" style="width: 270px"><%= now_note.user_id %></div>
+                    <!-- 所属作者 -->
+                    <div class="layui-col-xs3 note_item">
+                        <label class="layui-col-xs1 note_title_icon">
+                            <i class="layui-icon">&#xe612;</i>
+                        </label>
+                        <div class="layui-col-xs10 note_title_outer">
+                            <div class="share_note_author note_item_word" style="width: 270px"><%= now_note.user_id %></div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 所属标签 -->
-                <div class="layui-col-xs3 note_item">
-                    <label class="layui-col-xs1 note_title_icon">
-                        <i class="layui-icon">&#xe64c;</i>
-                    </label>
-                    <div class="layui-col-xs10 note_title_outer">
-                        <div class="share_note_tag note_item_word" style="width: 270px"><%= now_note.tag %></div>
+                    <!-- 所属标签 -->
+                    <div class="layui-col-xs3 note_item">
+                        <label class="layui-col-xs1 note_title_icon">
+                            <i class="layui-icon">&#xe64c;</i>
+                        </label>
+                        <div class="layui-col-xs10 note_title_outer">
+                            <div class="share_note_tag note_item_word" style="width: 270px"><%= now_note.tag %></div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 查看详情、点赞按钮 -->
-                <div class="btn_container layui-btn-group layui-col-xs2 note_item">
-                    <button class="check_btn layui-btn layui-btn-sm layui-btn-normal">
-                        <i class="layui-icon">&#xe857;</i>
-                        <p class="btn_group_tip">查看详情</p>
-                    </button>
-                    <button class="upvoke_btn layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe6c6;</i>
-                        <p class="btn_group_tip">0</p>
-                    </button>
-                </div>
+                    <!-- 查看详情、点赞按钮 -->
+                    <div class="btn_container layui-btn-group layui-col-xs2 note_item">
+                        <button class="check_btn layui-btn layui-btn-sm layui-btn-normal">
+                            <i class="layui-icon">&#xe857;</i>
+                            <p class="btn_group_tip">查看详情</p>
+                        </button>
+                        <button class="upvoke_btn layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe6c6;</i>
+                            <p class="btn_group_tip">0</p>
+                        </button>
+                    </div>
 
-                <div class="layui-col-xs12" style="height: 16px"></div>
-                <hr class="layui-bg-gray" style="margin: 10px">
+                    <div class="layui-col-xs12" style="height: 16px"></div>
+                    <hr class="layui-bg-gray" style="margin: 10px">
 
-                <div class="layui-col-xs12">
-                    <div class="share_note_file">
-                        <%= now_note.content %>
+                    <div class="layui-col-xs12">
+                        <div class="share_note_file">
+                            <%= now_note.content %>
+                        </div>
                     </div>
                 </div>
             </div>
+            <% } %>
+            <% } %>
         </div>
-        <% } %>
-        <% } %>
     </div>
 </div>
 
@@ -164,40 +165,9 @@
     var element = layui.element;
   });
 
+  var all_share_notes_backup = $('.share_note_line');
+
   function all_user_listeners() {
-    // 笔记单击之后变亮
-    $('.user_line').click(function () {
-      $('.user_line').each(function () {
-        $(this).css("border", "3px solid #BDC0BA");
-        $(this).removeClass("user_selected");
-      })
-      $(this).css("border", "3px solid #159587");
-      $(this).addClass("user_selected");
-      var selected_note = $(this);
-
-      // 根据选取的笔记读取内容，呈现在右边
-      // var cur_note_id = selected_note.find('.note_id').html();
-      // alert(cur_note_id);
-      //
-      // $.ajax({
-      //   type: "get",
-      //   async: true,
-      //   url: "/notes/" + cur_note_id,
-      //
-      //   success: function (result) {
-      //     // 动态修改当前样式，因为却是耽搁元素，所以直接取以数组形式返回的结果的第一个
-      //     $('.note_area').find('.note_id').html(cur_note_id);
-      //     $('.note_area').find('#note_name_input').val(result[0].note_name);
-      //     $('.note_area').find('#note_nb').html(result[0].nb_name);
-      //     $('.note_area').find('#note_tag_input').val(result[0].tag);
-      //     $('.note_area').find('.mynote').html(result[0].content);
-      //   },
-      //   error: function (result) {
-      //     alert("错误" + result);
-      //   }
-      // });
-    });
-
     // 左侧点击关注／取消关注
     $('.follow_btn').click(function (e) {
 
@@ -234,6 +204,44 @@
         }
       });
     });
+
+    // 笔记单击之后只显示该用户的分享笔记
+    $('.user_line').click(function () {
+      $('.user_line').each(function () {
+        $(this).css("border", "3px solid #BDC0BA");
+        $(this).removeClass("user_selected");
+      })
+      $(this).css("border", "3px solid #159587");
+      $(this).addClass("user_selected");
+
+      // 根据选取的笔记读取内容，呈现在右边
+      var cur_note_author_id = $(this).find('.user_id').html().trim();
+
+      var click_result = [];
+      var click_result_index = 0;
+      all_share_notes_backup.each(function () {
+        var note_author = $(this).find('.share_note_author').html().trim();
+        if (note_author === cur_note_author_id) {
+          click_result[click_result_index] = $(this).html();
+          click_result_index++;
+        }
+      });
+
+      // 根据结果重新生成界面代码
+      var html = '';
+      for (var i = 0; i < click_result.length; i++) {
+        if (i !== 0) {
+          html += '<div style="height: 5px;"></div>';
+        }
+        html += '<div class="share_note_line">';
+        html += click_result[i];
+        html += '</div>';
+      }
+      $('.all_share_notes_list').html(html);
+
+      // 重新渲染监听
+      all_user_listeners();
+    });
   }
 
   /**
@@ -252,7 +260,7 @@
   });
 
   /**
-   * 为分享的笔记点赞
+   * TODO 为分享的笔记点赞
    */
   $('.upvoke_btn').click(function () {
     var cur_upvote_num = $(this).find('.btn_group_tip').html();
@@ -269,7 +277,7 @@
   });
 
   /**
-   * 用户模糊搜索【访问数据库】
+   * 用户模糊搜索
    */
   var all_users_backup = $('.user_line');
   $('#search').bind('keypress', function (event) {
