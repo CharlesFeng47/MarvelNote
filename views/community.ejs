@@ -91,7 +91,8 @@
                         <i class="layui-icon">&#xe617;</i>
                     </label>
                     <div class="layui-col-xs10 note_title_outer">
-                        <div class="share_note_title note_item_word" style="width: 270px"><%= now_note.note_name %></div>
+                        <div class="share_note_title note_item_word"
+                             style="width: 270px"><%= now_note.note_name %></div>
                     </div>
                 </div>
 
@@ -156,14 +157,14 @@
 <script src="/javascripts/header_interaction.js"></script>
 
 <script>
-  $(document).ready(user_listeners());
+  $(document).ready(all_user_listeners());
 
 
   layui.use('element', function () {
     var element = layui.element;
   });
 
-  function user_listeners() {
+  function all_user_listeners() {
     // 笔记单击之后变亮
     $('.user_line').click(function () {
       $('.user_line').each(function () {
@@ -270,6 +271,7 @@
   /**
    * 用户模糊搜索【访问数据库】
    */
+  var all_users_backup = $('.user_line');
   $('#search').bind('keypress', function (event) {
     if (event.keyCode === 13) {
       var wanted = $('#search').val();
@@ -278,31 +280,30 @@
       var search_result = [];
       var search_result_index = 0;
 
-      $('.brief_note').each(function () {
-        var note_name = $(this).find('.brief_note_title').html().trim();
-        var note_content = $(this).find('.brief_note_content').html().trim();
+      all_users_backup.each(function () {
+        var user_id = $(this).find('.user_id').html().trim();
 
-        alert(note_name + "\n" + note_content);
-        alert(check.test(note_name) + "\n" + check.test(note_content))
-        if (check.test(note_name) || check.test(note_content)) {
+        if (check.test(user_id)) {
           search_result[search_result_index] = $(this).html();
           search_result_index++;
         }
       });
-      alert(search_result.length);
+      // alert(search_result.length);
 
       // 根据结果重新生成界面代码
       var html = '';
       for (var i = 0; i < search_result.length; i++) {
         if (i !== 0) {
-          html += '<div style="height: 5px;"></div><div class="brief_note">';
-        } else {
-          html += '<div class="brief_note note_selected" style="border: 3px solid #159587">';
+          html += '<div style="height: 5px;"></div>';
         }
+        html += '<div class="user_line">';
         html += search_result[i];
         html += '</div></div>';
       }
-      $('.all_notes').html(html);
+      $('.all_users').html(html);
+
+      // 重新渲染监听
+      all_user_listeners();
     }
   });
 

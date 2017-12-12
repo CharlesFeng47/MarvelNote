@@ -314,6 +314,7 @@
   /**
    * 在当前的笔记本中选取，进行模糊搜索
    */
+  var all_notes_backup = $('.nb_area');
   $('#search').bind('keypress', function (event) {
     if (event.keyCode === 13) {
       var wanted = $('#search').val();
@@ -322,7 +323,7 @@
       var search_result = [];
       var search_result_index = 0;
 
-      $('.nb_area').each(function () {
+      all_notes_backup.each(function () {
         var nb_name = $(this).find('.nb_name').html();
         var nb_description = $(this).find('.nb_description').html().trim().substring(3);
 

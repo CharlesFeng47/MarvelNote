@@ -236,6 +236,7 @@
   /**
    * 在当前的笔记中选取，进行模糊搜索
    */
+  var all_notes_backup = $('.brief_note');
   $('#search').bind('keypress', function (event) {
     if (event.keyCode === 13) {
       var wanted = $('#search').val();
@@ -244,18 +245,18 @@
       var search_result = [];
       var search_result_index = 0;
 
-      $('.brief_note').each(function () {
+      all_notes_backup.each(function () {
         var note_name = $(this).find('.brief_note_title').html().trim();
         var note_content = $(this).find('.brief_note_content').html().trim();
 
-        alert(note_name + "\n" + note_content);
-        alert(check.test(note_name) + "\n" + check.test(note_content))
+        // alert(note_name + "\n" + note_content);
+        // alert(check.test(note_name) + "\n" + check.test(note_content))
         if (check.test(note_name) || check.test(note_content)) {
           search_result[search_result_index] = $(this).html();
           search_result_index++;
         }
       });
-      alert(search_result.length);
+      // alert(search_result.length);
 
       // 根据结果重新生成界面代码
       var html = '';
