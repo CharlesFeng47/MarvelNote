@@ -21,23 +21,23 @@ router.get('/', function (request, response, next) {
           response.render('error');
         } else {
           var all_users = res;
-          console.log(JSON.stringify(all_users));
+          console.log("all_users" + JSON.stringify(all_users));
 
           // 当前用户关注的用户
-          db.all("select * from relationship where following = '" + request.session.cur_user + "'", function (err, res) {
+          db.all("select * from relationship where following = '" + request.session.cur_user + "'", function (err, following) {
             if (err) {
               console.log(err);
               response.render('error')
             } else {
-              console.log(JSON.stringify(res));
+              console.log("following" + JSON.stringify(following));
 
               var user_data = [];
               var user_data_index = 0;
               // 对所有用户在关于当前用户是否关注方面进行区分
               for (var i = 0; i < all_users.length; i++) {
                 var is_following = false;
-                for (var j = 0; j < res.length; j++) {
-                  if (all_users[i].id === res[j].be_followed) {
+                for (var j = 0; j < following.length; j++) {
+                  if (all_users[i].id === following[j].be_followed) {
                     is_following = true;
                   }
                 }
@@ -49,23 +49,53 @@ router.get('/', function (request, response, next) {
                 user_data_index++;
               }
 
+              // 我关注的用户中公开的笔记
               var all_public_notes_sql = "select note.*, user_id from note, notebook, relationship where following = '"
                 + request.session.cur_user + "' " + "and be_followed = notebook.user_id and notebook.nb_id = note.nb_id "
-                + "order by update_time desc";
-              db.all(all_public_notes_sql, function (err, res) {
+                + " and note.is_public = 1 order by update_time desc";
+              db.all(all_public_notes_sql, function (err, my_all_share_notes) {
                 if (err) {
                   console.log(err);
                   response.render('error')
                 } else {
-                  console.log(JSON.stringify(res));
-                  if (res.length !== 0) {
-                    response.render('community', {
-                      user_data: user_data,
-                      has_share_note: true,
-                      share_notes_data: res,
-                      cur_user: request.session.cur_user
+                  console.log("my_all_share_notes: " + JSON.stringify(my_all_share_notes));
+                  if (my_all_share_notes.length !== 0) {
+                    // 先取出我点过的所有赞
+                    var my_upvotw_sql = "select note_id from upvote where user_id = '" + request.session.cur_user + "'";
+                    db.all(my_upvotw_sql, function (err, my_upvote) {
+                      if (err) {
+                        console.log(err);
+                        response.render('error')
+                      } else {
+                        console.log("my_upvote" + JSON.stringify(my_upvote));
+
+                        var share_notes_data = [];
+                        // 对比查看我是否点过赞
+                        for (var i = 0; i < my_all_share_notes.length; i++) {
+                          var has_upvoted = false;
+                          for (var j = 0; j < my_upvote.length; j++) {
+                            if (my_all_share_notes[i].note_id === my_upvote[j].note_id) {
+                              has_upvoted = true;
+                            }
+                          }
+                          share_notes_data[i] = {
+                            note: my_all_share_notes[i],
+                            has_upvoted: has_upvoted
+                          };
+                        }
+
+                        console.log("share_notes_data: " + JSON.stringify(share_notes_data));
+
+                        response.render('community', {
+                          user_data: user_data,
+                          has_share_note: true,
+                          share_notes_data: share_notes_data,
+                          cur_user: request.session.cur_user
+                        });
+
+                      }
                     });
-                  } else{
+                  } else {
                     response.render('community', {
                       user_data: user_data,
                       has_share_note: false,
