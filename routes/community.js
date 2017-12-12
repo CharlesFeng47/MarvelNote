@@ -144,4 +144,44 @@ router.post('/follow', function (request, response, next) {
   });
 });
 
+/**
+ * 点赞／取消点赞选定的用户
+ */
+router.post('/upvote', function (request, response, next) {
+
+  var request_body = request.body;
+  var upvote_sql;
+  if (request_body.now_upvote_state === 'true') {
+    upvote_sql = "insert into upvote('note_id', 'user_id') values('" + request_body.note_id + "', '" + request.session.cur_user + "')";
+  } else {
+    upvote_sql = "delete from upvote where note_id='" + request_body.note_id + "' and user_id='" + request.session.cur_user + "'";
+  }
+  console.log(upvote_sql);
+
+  db.all(upvote_sql, function (err, res) {
+    if (err) {
+      console.log(err);
+      response.render('error')
+    } else {
+      console.log(JSON.stringify(res));
+
+      // 修改 note 表中用户点赞数
+      var note_sql;
+      note_sql = "update note set upvote_num='" + request_body.now_update_num + "' where note_id='" + request_body.note_id + "'";
+      console.log(note_sql);
+
+      db.all(note_sql, function (err, res) {
+        if (err) {
+          console.log(err);
+          response.render('error')
+        } else {
+          console.log(JSON.stringify(res));
+          response.send("upvote state change success");
+        }
+      });
+    }
+  });
+});
+
+
 module.exports = router;

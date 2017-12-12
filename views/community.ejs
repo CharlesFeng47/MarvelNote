@@ -117,16 +117,27 @@
                         </div>
                     </div>
 
+                    <!-- 所需要的笔记 note_id -->
+                    <p class="note_id" style="display: none"><%= now_note.note_id %></p>
+
+
                     <!-- 查看详情、点赞按钮 -->
                     <div class="btn_container layui-btn-group layui-col-xs2 note_item">
                         <button class="check_btn layui-btn layui-btn-sm layui-btn-normal">
                             <i class="layui-icon">&#xe857;</i>
                             <p class="btn_group_tip">查看详情</p>
                         </button>
+                        <% if (share_notes_data[i].has_upvoted === true) { %>
+                        <button class="upvoke_btn has_upvoted layui-btn layui-btn-sm" style="color: red">
+                            <i class="layui-icon">&#xe6c6;</i>
+                            <p class="btn_group_tip"><%= now_note.upvote_num %></p>
+                        </button>
+                        <% } else { %>
                         <button class="upvoke_btn layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe6c6;</i>
-                            <p class="btn_group_tip">0</p>
+                            <p class="btn_group_tip"><%= now_note.upvote_num %></p>
                         </button>
+                        <% } %>
                     </div>
 
                     <div class="layui-col-xs12" style="height: 16px"></div>
@@ -262,19 +273,50 @@
     });
 
     /**
-     * TODO 为分享的笔记点赞
+     * 为分享的笔记点赞
      */
     $('.upvoke_btn').click(function () {
-      var cur_upvote_num = $(this).find('.btn_group_tip').html();
+      var upvote_btn = $(this);
+      var upvote_btn_text = $(this).children("p.btn_group_tip");
+
+      var cur_upvote_num = upvote_btn.find('.btn_group_tip').html();
       alert(cur_upvote_num)
 
-      var data;
-      if ($(this).hasClass('.has_upvoted')) {
-        data = {
-          note_id: a,
-          now_upvote_num: 0
-        };
-      }
+      var now_upvote_state = !upvote_btn.hasClass('has_upvoted');
+
+      var now_update_num = upvote_btn.find('.btn_group_tip').html();
+      if (now_upvote_state) now_update_num++;
+      else now_update_num--;
+
+      var data = {
+        note_id: upvote_btn.parent().parent().find('.note_id').html(),
+        now_upvote_state: now_upvote_state,
+        now_update_num: now_update_num
+      };
+      alert(JSON.stringify(data));
+
+      $.ajax({
+        type: "post",
+        async: true,
+        url: "/community/upvote",
+        data: data,
+
+        success: function (result) {
+          // 动态修改当前样式
+          if (now_upvote_state === true) {
+            upvote_btn.addClass('has_upvoted');
+            upvote_btn.css("color", "red");
+          } else {
+            upvote_btn.removeClass('has_upvoted');
+            upvote_btn.css("color", "white");
+          }
+          upvote_btn_text.html(now_update_num);
+
+        },
+        error: function (result) {
+          alert("错误" + result);
+        }
+      });
 
     });
   }
