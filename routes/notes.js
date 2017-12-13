@@ -37,7 +37,7 @@ router.get('/', function (request, response, next) {
 
           if (wanted_notes.length === 0) {
             // 用户没有笔记，呈现默认的笔记本，若没有默认的笔记本，则不可编辑笔记本项
-            db.all("select * from notebook limit 1", function (err, res) {
+            db.all("select * from notebook where user_id = '" + request.session.cur_user + "' limit 1", function (err, res) {
               if (err) {
                 console.log(err);
                 response.render('error');
