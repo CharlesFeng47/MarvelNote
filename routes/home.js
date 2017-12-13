@@ -9,7 +9,18 @@ var db = new sqlite.Database('./MarvelNote.sqlite');
  */
 router.get('/', function (request, response, next) {
   console.log("GET HOME");
-  response.render('home');
+
+  if (request.session.cur_user) {
+    console.log("--------- LOG IN: " + request.session.cur_user + "  " + request.session.cur_user_type);
+    if (request.session.cur_user_type === 0) {
+      response.redirect("index");
+    } else {
+      response.redirect("admin");
+    }
+  } else {
+    response.render("home");
+  }
+
 });
 
 /**
